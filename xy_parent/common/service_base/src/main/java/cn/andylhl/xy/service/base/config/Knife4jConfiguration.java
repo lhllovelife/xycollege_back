@@ -48,7 +48,7 @@ public class Knife4jConfiguration {
     @Bean
     public Docket adminApiConfig() {
         Docket docket=new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(webApiInfo())
+                .apiInfo(adminApiInfo())
                 //分组名称
                 .groupName("adminApi")
                 .select()

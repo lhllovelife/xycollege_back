@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: service_edu # \u5E94\u7528\u540D\u79F0
+  profiles:
+    active: dev # \u73AF\u5883\u914D\u7F6E
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.1.37:3306/xy_edu?useUnicode=true&characterEncoding=UTF-8
