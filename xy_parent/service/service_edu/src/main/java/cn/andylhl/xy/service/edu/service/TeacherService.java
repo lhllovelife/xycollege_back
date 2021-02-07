@@ -5,6 +5,9 @@ import cn.andylhl.xy.service.edu.entity.vo.TeacherQueryVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 讲师 服务类
@@ -23,4 +26,11 @@ public interface TeacherService extends IService<Teacher> {
      * @return
      */
     Page<Teacher> selectPage(Long page, Long limit, TeacherQueryVO teacherQueryVO);
+
+    /**
+     * 根据左关键词查询讲师名字列表
+     * @param key
+     * @return
+     */
+    List<Map<String, Object>> getNameListByKey(String key);
 }

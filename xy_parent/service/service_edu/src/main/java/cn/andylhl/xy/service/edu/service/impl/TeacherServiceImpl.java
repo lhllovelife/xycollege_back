@@ -10,6 +10,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 讲师 服务实现类
@@ -33,6 +36,10 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
         // 0. 用于准备查询条件 (WHERE is_deleted=0 AND (name LIKE ? AND level = ? AND join_date >= ? AND join_date <= ?) LIMIT ?,? )
         QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+
+        // 补充：排序，按照sort字段排序
+        queryWrapper.orderByAsc("sort");
+
         // 1. 封装分页对象(传入参数 页码和每页显示记录条数)
         Page<Teacher> pageParam = new Page<>(page, limit);
         // 2. 判断查询条件对象是否为空
@@ -67,5 +74,23 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         // 执行到此处，查询条件已经封装完毕，进行分页查询（带有查询条件）
 
         return baseMapper.selectPage(pageParam, queryWrapper);
+    }
+
+    /**
+     * 根据左关键词查询讲师名字列表
+     * @param key
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> getNameListByKey(String key) {
+        // 1. 封装查询条件(SELECT name FROM edu_teacher WHERE is_deleted=0 AND (name LIKE ?))
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        queryWrapper.
+                select("name").
+                likeRight("name", key);
+        // 2. 执行查询，每条查询结果是一个map集合
+        List<Map<String, Object>> nameList = baseMapper.selectMaps(queryWrapper);
+
+        return nameList;
     }
 }

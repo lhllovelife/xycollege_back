@@ -1,5 +1,6 @@
 package cn.andylhl.xy.service.base.handler;
 
+import cn.andylhl.xy.common.base.exception.XyCollegeException;
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.common.base.util.ExceptionUtils;
@@ -51,4 +52,17 @@ public class GlobalExceptionHandler {
         log.error(ExceptionUtils.getMessage(e));
         return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
     }
+
+    /**
+     * 项目自定义异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(XyCollegeException.class)
+    @ResponseBody
+    public R error(XyCollegeException e){
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error().code(e.getCode()).message(e.getMessage());
+    }
+
 }

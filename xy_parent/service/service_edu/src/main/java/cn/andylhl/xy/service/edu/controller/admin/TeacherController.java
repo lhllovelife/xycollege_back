@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,6 +24,7 @@ import java.util.List;
  * @author lhl
  * @since 2021-01-29
  */
+@CrossOrigin
 @Api(tags = "讲师管理")
 @Slf4j
 @RestController
@@ -60,6 +62,24 @@ public class TeacherController {
             return R.error().message("数据不存在");
         }
     }
+
+    /**
+     * 根据id列表批量删除讲师
+     * @param idList
+     * @return
+     */
+    @ApiOperation(value = "批量删除讲师", notes = "根据id列表逻辑删除讲师")
+    @DeleteMapping("/batch-remove")
+    public R batchRemoveTeacher(@ApiParam(value = "讲师id列表", required = true) @RequestBody List<String> idList) {
+        log.info("进入service_edu, 根据id列表批量删除讲师");
+        Boolean result = teacherService.removeByIds(idList);
+        if (result) {
+            return R.ok().message("删除成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
+    }
+
 
     @ApiOperation("讲师列表分页查询(关键词可选)")
     @GetMapping("/list/{page}/{limit}")
@@ -132,6 +152,21 @@ public class TeacherController {
             return R.error().message("数据不存在");
         }
     }
+
+    /**
+     * 根据左关键词查询讲师名字列表
+     * @return
+     */
+    @ApiOperation("根据左关键词查询讲师名字列表")
+    @GetMapping("/list/name/{key}")
+    public R getNameListByKey(@ApiParam(value = "查询关键词", required = true) @PathVariable("key") String key) {
+        log.info("进入service_edu, 根据左关键词查询讲师名字列表");
+
+        List<Map<String, Object>> nameList = teacherService.getNameListByKey(key);
+
+        return R.ok().data("nameList", nameList);
+    }
+
 
 }
 

@@ -1,0 +1,18 @@
+server:
+  port: 8120 # 端口号
+spring:
+  application:
+    name: service_oss # 应用名称
+  profiles:
+    active: dev # 环境配置
+# mybatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 阿里云oss
+aliyun:
+  oss:
+    keyId: LTAI4GEc8neP1KfNucXgemEw
+    keySecret: UAl3MFnZ9nMkV0Nn3tshgEgUGHsfBA
+    bucketName: xycollege-file
+    endpoint: oss-cn-beijing.aliyuncs.com
