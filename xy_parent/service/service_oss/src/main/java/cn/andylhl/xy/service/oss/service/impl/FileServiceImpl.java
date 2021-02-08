@@ -73,4 +73,29 @@ public class FileServiceImpl implements FileService {
         // 返回url地址 https://xycollege-file.oss-cn-beijing.aliyuncs.com/avatar/01.jpg
         return "https://"+ bucketname+ "."+ endpoint +"/" + objectName;
     }
+
+    /**
+     * 根据文件路径删除文件
+     * @param url 阿里云oss地址: https://xycollege-file.oss-cn-beijing.aliyuncs.com/avatar/01.jpg
+     */
+    @Override
+    public void removeFile(String url) {
+
+        String endpoint = ossProperties.getEndpoint();
+        String bucketname = ossProperties.getBucketName();
+        String accessKeyId = ossProperties.getKeyId();
+        String accessKeySecret = ossProperties.getKeySecret();
+        // 1. 准备objectName eg: avatar/01.jpg
+        // 从url中截取出objecName
+        String host = "https://"+ bucketname+ "."+ endpoint +"/";
+        String objectName = url.substring(host.length());
+        //2. 创建OSSClient实例。
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        //3. 删除文件
+        ossClient.deleteObject(bucketname, objectName);
+
+        //4. 关闭OSSClient。
+        ossClient.shutdown();
+    }
 }

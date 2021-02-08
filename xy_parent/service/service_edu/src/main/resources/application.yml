@@ -1,8 +1,10 @@
 server:
   port: 8110 # 端口号
+#  tomcat:
+#    max-threads: 10 # 修改tomcat最大并发值为10，默认是200。（超过最大并发值，开始执行同步策略）
 spring:
   application:
-    name: service_edu # 应用名称
+    name: service-edu # 应用名称
   profiles:
     active: dev # 环境配置
   datasource:
@@ -13,7 +15,32 @@ spring:
   jackson: #返回json的全局时间格式
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+#spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.37:8848 # 注册中心nacos服务地址
+#spring:
+# cloud:
+    sentinel:
+      transport:
+        port: 8081 #跟控制台交流的端口，随意指定一个未使用的端口即可
+        dashboard: 127.0.0.1:8080 # 指定sentinel控制台服务的地址
 #mybatis日志
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 配置负载均衡策略（对要调用的下游微服务进行指定配置）
+service-oss:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+# ribbon相关配置
+ribbon:
+  MaxAutoRetries: 0 # 同一实例最大重试次数，不包括首次调用，默认0
+  MaxAutoRetriesNextServer: 1 # 重试其他实例的最大重试次数，不包括首次所选的server，默认1
+  ConnectTimeout: 10000 #连接建立的超时时长，默认1秒
+  ReadTimeout: 10000 #处理请求的超时时间，默认为1秒
+# 开启feign对ribbon的支持
+feign:
+  sentinel:
+    enabled: true

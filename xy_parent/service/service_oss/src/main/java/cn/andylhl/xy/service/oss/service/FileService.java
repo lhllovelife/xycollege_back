@@ -19,4 +19,9 @@ public interface FileService {
      */
     String upload(InputStream inputStream, String module, String originalFilename);
 
+    /**
+     * 根据文件路径删除文件
+     * @param url
+     */
+    void removeFile(String url);
 }

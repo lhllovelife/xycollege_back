@@ -4,6 +4,7 @@ package cn.andylhl.xy.service.edu.controller.admin;
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.edu.entity.Teacher;
 import cn.andylhl.xy.service.edu.entity.vo.TeacherQueryVO;
+import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
 import cn.andylhl.xy.service.edu.service.TeacherService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,9 @@ public class TeacherController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private OssFileRemoteService ossFileRemoteService;
 
     /**
      * 查询全部讲师
@@ -55,6 +60,9 @@ public class TeacherController {
     @DeleteMapping("/remove/{id}")
     public R removeTeacherById(@ApiParam(value = "讲师id") @PathVariable("id") String id) {
         log.info("进入service_edu, 根据id逻辑删除单个讲师");
+        // 1. 删除图片
+        teacherService.removeAvatarById(id);
+        // 2. 删除讲师
         Boolean result = teacherService.removeById(id);
         if (result) {
             return R.ok().message("删除成功");
@@ -167,6 +175,31 @@ public class TeacherController {
         return R.ok().data("nameList", nameList);
     }
 
+    @ApiOperation("测试服务调用")
+    @GetMapping("/test")
+    public R test(){
+        R ossR = ossFileRemoteService.test();
+        return R.ok().data("time", ossR.getData().get("time")).data("port", ossR.getData().get("port"));
+    }
+
+    @ApiOperation("测试并发")
+    @GetMapping("/test-concurrent")
+    public R testConcurrent() {
+        log.info("测试并发");
+        return R.ok().data("conncurrent-time", LocalTime.now());
+    }
+
+    @ApiOperation("测试方法1")
+    @GetMapping("/message1")
+    public R message1() {
+        return R.ok().message("message1");
+    }
+
+    @ApiOperation("测试方法2")
+    @GetMapping("/message2")
+    public R message2() {
+        return R.ok().message("message2");
+    }
 
 }
 

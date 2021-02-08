@@ -2,9 +2,14 @@ server:
   port: 8120 # 端口号
 spring:
   application:
-    name: service_oss # 应用名称
+    name: service-oss # 应用名称
   profiles:
     active: dev # 环境配置
+#spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.37:8848 # 注册中心nacos服务地址
 # mybatis日志
 mybatis-plus:
   configuration:

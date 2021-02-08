@@ -1,13 +1,16 @@
 package cn.andylhl.xy.service.edu.service.impl;
 
+import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.edu.entity.Teacher;
 import cn.andylhl.xy.service.edu.entity.vo.TeacherQueryVO;
+import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
 import cn.andylhl.xy.service.edu.mapper.TeacherMapper;
 import cn.andylhl.xy.service.edu.service.TeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +26,9 @@ import java.util.Map;
  */
 @Service
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
+
+    @Autowired
+    private OssFileRemoteService ossFileRemoteService;
 
     /**
      * 执行分页, 返回分页对象信息
@@ -92,5 +98,25 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         List<Map<String, Object>> nameList = baseMapper.selectMaps(queryWrapper);
 
         return nameList;
+    }
+
+    /**
+     * 根据id删除讲师头像
+     * @param id
+     */
+    @Override
+    public Boolean removeAvatarById(String id) {
+        // 1. 根据id查询要删除讲师信息
+        Teacher teacher = baseMapper.selectById(id);
+        if (teacher != null) {
+            String url = teacher.getAvatar();
+            if (!StringUtils.isEmpty(url)) {
+                R r = ossFileRemoteService.removeFile(url);
+                // 将远程调用结果正确是否进行返回
+                return r.getSuccess();
+            }
+        }
+        // 不满足条件则返回false
+        return false;
     }
 }
