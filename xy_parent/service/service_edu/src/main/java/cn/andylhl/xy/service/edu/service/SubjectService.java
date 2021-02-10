@@ -1,9 +1,11 @@
 package cn.andylhl.xy.service.edu.service;
 
 import cn.andylhl.xy.service.edu.entity.Subject;
+import cn.andylhl.xy.service.edu.entity.vo.SubjectVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +22,10 @@ public interface SubjectService extends IService<Subject> {
      * @param inputStream
      */
     void batchImport(InputStream inputStream);
+
+    /**
+     * 获取课程分类的嵌套数据列表
+     * @return
+     */
+    List<SubjectVO> getSubjectNestedList();
 }
