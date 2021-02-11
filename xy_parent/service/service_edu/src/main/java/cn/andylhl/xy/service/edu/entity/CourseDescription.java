@@ -27,6 +27,11 @@ public class CourseDescription extends BaseEntity {
 
     private static final long serialVersionUID=1L;
 
+    // 修改主键策略
+    @ApiModelProperty(value = "主键ID")
+    @TableId(value = "id", type = IdType.NONE)
+    private String id;
+
     @ApiModelProperty(value = "课程简介")
     private String description;
 

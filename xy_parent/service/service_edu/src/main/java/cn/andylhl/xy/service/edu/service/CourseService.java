@@ -1,6 +1,7 @@
 package cn.andylhl.xy.service.edu.service;
 
 import cn.andylhl.xy.service.edu.entity.Course;
+import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CourseService extends IService<Course> {
 
+    /**
+     * 保存课程基本信息
+     * @param courseInfoForm
+     * @return
+     */
+    String saveCourseInfo(CourseInfoForm courseInfoForm);
 }
