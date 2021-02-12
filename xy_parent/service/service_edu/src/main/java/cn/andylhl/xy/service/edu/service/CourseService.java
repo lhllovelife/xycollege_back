@@ -27,4 +27,10 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     CourseInfoForm getCourseInfoById(String id);
+
+    /**
+     * 更新课程信息
+     * @param courseInfoForm
+     */
+    void updateCourseInfo(CourseInfoForm courseInfoForm);
 }

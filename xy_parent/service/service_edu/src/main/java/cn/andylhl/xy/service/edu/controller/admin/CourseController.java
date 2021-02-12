@@ -56,5 +56,16 @@ public class CourseController {
         }
     }
 
+    @ApiOperation("更新课程信息")
+    @PutMapping("/update-course-info")
+    public R updateCourseInfo(
+            @ApiParam(value = "课程信息", required = true)
+            @RequestBody CourseInfoForm courseInfoForm) {
+        log.info("进入service_edu, 根据id查询课程基本信息");
+        courseService.updateCourseInfo(courseInfoForm);
+
+        return R.ok().message("修改成功");
+    }
+
 }
 

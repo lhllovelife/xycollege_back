@@ -80,4 +80,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         return courseInfoForm;
     }
+
+    /**
+     * 更新课程信息
+     * @param courseInfoForm
+     */
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void updateCourseInfo(CourseInfoForm courseInfoForm) {
+        // 1. 更新课程基本信息
+        Course course = new Course();
+        BeanUtils.copyProperties(courseInfoForm, course);
+        baseMapper.updateById(course);
+
+        // 2. 更新课程描述信息
+        CourseDescription courseDescription = new CourseDescription();
+        courseDescription.setId(courseInfoForm.getId());
+        courseDescription.setDescription(courseInfoForm.getDescription());
+        courseDescriptionMapper.updateById(courseDescription);
+
+    }
 }
