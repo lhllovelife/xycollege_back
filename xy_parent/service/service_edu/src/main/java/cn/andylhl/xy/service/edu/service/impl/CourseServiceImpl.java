@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,5 +56,28 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseDescriptionMapper.insert(courseDescription);
         // 返回课程id
         return course.getId();
+    }
+
+    /**
+     *  根据id查询课程基本信息
+     * @param id
+     * @return
+     */
+    @Override
+    public CourseInfoForm getCourseInfoById(String id) {
+        // 1. 获取课程基本信息
+        Course course = baseMapper.selectById(id);
+        // 如果根据id查询不到数据，则可能该条课程信息已被删除，返回null
+        if (course == null) {
+            return null;
+        }
+        // 2. 获取课程描述信息
+        CourseDescription courseDescription = courseDescriptionMapper.selectById(id);
+        // 3. 组装数据
+        CourseInfoForm courseInfoForm = new CourseInfoForm();
+        BeanUtils.copyProperties(course, courseInfoForm);
+        courseInfoForm.setDescription(courseDescription.getDescription());
+
+        return courseInfoForm;
     }
 }

@@ -20,4 +20,11 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     String saveCourseInfo(CourseInfoForm courseInfoForm);
+
+    /**
+     * 根据id查询课程基本信息
+     * @param id
+     * @return
+     */
+    CourseInfoForm getCourseInfoById(String id);
 }

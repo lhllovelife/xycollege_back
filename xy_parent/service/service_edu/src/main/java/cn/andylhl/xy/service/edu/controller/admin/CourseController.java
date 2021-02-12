@@ -1,8 +1,8 @@
 package cn.andylhl.xy.service.edu.controller.admin;
 
 
-import cn.andylhl.xy.common.base.exception.XyCollegeException;
 import cn.andylhl.xy.common.base.result.R;
+import cn.andylhl.xy.common.base.util.ExceptionUtils;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import cn.andylhl.xy.service.edu.service.CourseService;
 import io.swagger.annotations.Api;
@@ -40,6 +40,20 @@ public class CourseController {
 
         String courseId = courseService.saveCourseInfo(courseInfoForm);
         return R.ok().message("保存成功").data("courseId", courseId);
+    }
+
+    @ApiOperation("根据id查询课程基本信息")
+    @GetMapping("/course-info/{id}")
+    public R getCourseInfoById(
+            @ApiParam(value = "课程id", required = true)
+            @PathVariable(value = "id", required = true) String id) {
+        log.info("进入service_edu, 根据id查询课程基本信息");
+        CourseInfoForm courseInfoForm = courseService.getCourseInfoById(id);
+        if (courseInfoForm != null) {
+            return R.ok().data("item", courseInfoForm);
+        } else {
+            return R.error().message("数据不存在");
+        }
     }
 
 }
