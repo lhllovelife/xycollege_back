@@ -3,14 +3,21 @@ package cn.andylhl.xy.service.edu.controller.admin;
 
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.util.ExceptionUtils;
+import cn.andylhl.xy.service.edu.entity.Teacher;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
+import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
+import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
+import cn.andylhl.xy.service.edu.entity.vo.TeacherQueryVO;
 import cn.andylhl.xy.service.edu.service.CourseService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -67,5 +74,28 @@ public class CourseController {
         return R.ok().message("修改成功");
     }
 
-}
+    @ApiOperation("课程列表分页查询(关键词可选)")
+    @GetMapping("/list/{page}/{limit}")
+    public R listPageCourse(
+            @ApiParam(value = "页码", required = true) @PathVariable("page") Long page,
+            @ApiParam(value = "每页显示记录数", required = true) @PathVariable("limit") Long limit,
+            @ApiParam("分页查询条件") CourseQueryVO courseQueryVO) {
+        log.info("进入service_edu, 分页查询课程(关键词可选)");
 
+        // 1. 调用service处理业务，执行分页, 返回分页对象信息
+        Page<CourseVO> pageModel = courseService.selectPage(page, limit, courseQueryVO);
+
+        // 2. 准备返回值
+        // 查询结果集合
+        List<CourseVO> teacherList = pageModel.getRecords();
+        // 总记录条数
+        long total = pageModel.getTotal();
+
+        return R.ok().data("total", total).data("rows", teacherList);
+    }
+
+}
+/*
+
+
+ */

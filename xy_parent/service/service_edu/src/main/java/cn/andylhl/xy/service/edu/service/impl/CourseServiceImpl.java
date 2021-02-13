@@ -4,17 +4,24 @@ import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.CourseDescription;
 import cn.andylhl.xy.service.edu.entity.excel.ExcelSubjectData;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
+import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
+import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
 import cn.andylhl.xy.service.edu.mapper.CourseDescriptionMapper;
 import cn.andylhl.xy.service.edu.mapper.CourseMapper;
 import cn.andylhl.xy.service.edu.service.CourseService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -99,5 +106,54 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseDescription.setDescription(courseInfoForm.getDescription());
         courseDescriptionMapper.updateById(courseDescription);
 
+    }
+
+    /**
+     * 分页查询（关键词可选）
+     * @param page
+     * @param limit
+     * @param courseQueryVO
+     * @return
+     */
+    @Override
+    public Page<CourseVO> selectPage(Long page, Long limit, CourseQueryVO courseQueryVO) {
+
+        // 组装查询条件
+        QueryWrapper<CourseQueryVO> queryWrapper = new QueryWrapper<>();
+        String title = courseQueryVO.getTitle();
+        String teacherId = courseQueryVO.getTeacherId();
+        String subjectParentId = courseQueryVO.getSubjectParentId();
+        String subjectId = courseQueryVO.getSubjectId();
+
+        if (!StringUtils.isEmpty(title)) {
+            // '%' title '%'
+            queryWrapper.like("c.title", title);
+        }
+
+        if (!StringUtils.isEmpty(teacherId)) {
+            // c.teacher_id = ''
+            queryWrapper.eq("c.teacher_id", teacherId);
+        }
+
+        if (!StringUtils.isEmpty(subjectParentId)) {
+            // s1.id = ''
+            queryWrapper.eq("s1.id", subjectParentId);
+        }
+
+        if (!StringUtils.isEmpty(subjectId)) {
+            // s2.id = ''
+            queryWrapper.eq("s2.id", subjectId);
+        }
+
+        // 按创建时间排序
+        queryWrapper.orderByDesc("c.gmt_create");
+
+        // 创建分页对象
+        Page<CourseVO> pageInfo = new Page<>(page, limit);
+
+        // 执行查询，Mybatis-Plus会自动组装分页参数
+        List<CourseVO> courseVOList = baseMapper.selectPageByCourseQueryVO(pageInfo, queryWrapper);
+
+        return pageInfo.setRecords(courseVOList);
     }
 }

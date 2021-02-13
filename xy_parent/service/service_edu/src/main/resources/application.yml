@@ -30,6 +30,8 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# mybatis-plus:
+  mapper-locations: classpath:cn/andylhl/xy/service/edu/mapper/xml/*.xml
 # 配置负载均衡策略（对要调用的下游微服务进行指定配置）
 service-oss:
   ribbon:

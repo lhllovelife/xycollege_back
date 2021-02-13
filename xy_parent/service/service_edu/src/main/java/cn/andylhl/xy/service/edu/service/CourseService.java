@@ -2,6 +2,9 @@ package cn.andylhl.xy.service.edu.service;
 
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
+import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
+import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -33,4 +36,13 @@ public interface CourseService extends IService<Course> {
      * @param courseInfoForm
      */
     void updateCourseInfo(CourseInfoForm courseInfoForm);
+
+    /**
+     * 分页查询（关键词可选）
+     * @param page
+     * @param limit
+     * @param courseQueryVO
+     * @return
+     */
+    Page<CourseVO> selectPage(Long page, Long limit, CourseQueryVO courseQueryVO);
 }
