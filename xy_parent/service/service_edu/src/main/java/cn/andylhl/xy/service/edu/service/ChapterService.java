@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ChapterService extends IService<Chapter> {
 
+    /**
+     * 删除章节信息(该章节下的课时信息)
+     * @param id
+     * @return
+     */
+    boolean removeChapterById(String id);
 }
