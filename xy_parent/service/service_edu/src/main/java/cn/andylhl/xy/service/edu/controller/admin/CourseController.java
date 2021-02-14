@@ -118,7 +118,7 @@ public class CourseController {
     }
 
     @ApiOperation("获取课程发布基本信息")
-    @GetMapping("course-publish/{id}")
+    @GetMapping("/course-publish/{id}")
     public R getCoursePublishInfo(
             @ApiParam("课程id") @PathVariable("id") String id
     ) {
@@ -131,8 +131,22 @@ public class CourseController {
         } else {
             return R.error().message("数据不存在");
         }
-
     }
+
+    @ApiOperation("发布课程")
+    @PutMapping("/publish-course/{id}")
+    public R publishCourse(
+            @ApiParam("课程id") @PathVariable("id") String id
+    ) {
+        log.info("进入service_edu, 发布课程");
+        Boolean result = courseService.publishCourse(id);
+        if (result) {
+            return R.ok().message("发布成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
+    }
+
 
 }
 /*

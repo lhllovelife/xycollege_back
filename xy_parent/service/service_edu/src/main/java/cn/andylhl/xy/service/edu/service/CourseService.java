@@ -66,4 +66,11 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     CoursePublishVO getCoursePublishInfo(String id);
+
+    /**
+     * 发布课程
+     * @param id
+     * @return
+     */
+    Boolean publishCourse(String id);
 }

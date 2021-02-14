@@ -239,4 +239,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return baseMapper.selectCoursePublishInfo(id);
 
     }
+
+    /**
+     * 发布课程(修改课程信息的状态 由Draft改为Normal)
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public Boolean publishCourse(String id) {
+        Course course = new Course();
+        course.setId(id);
+        course.setStatus(CourseInfoForm.COURSE_NORMAL);
+
+        return this.updateById(course);
+    }
 }
