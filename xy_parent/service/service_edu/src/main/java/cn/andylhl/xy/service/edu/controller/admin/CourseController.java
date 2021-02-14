@@ -5,6 +5,7 @@ import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.util.ExceptionUtils;
 import cn.andylhl.xy.service.edu.entity.Teacher;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
+import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
 import cn.andylhl.xy.service.edu.entity.vo.TeacherQueryVO;
@@ -110,6 +111,23 @@ public class CourseController {
 
         if (reslult) {
             return R.ok().message("删除成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
+
+    }
+
+    @ApiOperation("获取课程发布基本信息")
+    @GetMapping("course-publish/{id}")
+    public R getCoursePublishInfo(
+            @ApiParam("课程id") @PathVariable("id") String id
+    ) {
+        log.info("进入service_edu, 获取课程发布基本信息");
+
+        CoursePublishVO coursePublishVO = courseService.getCoursePublishInfo(id);
+
+        if (coursePublishVO != null) {
+            return R.ok().data("item", coursePublishVO);
         } else {
             return R.error().message("数据不存在");
         }

@@ -1,6 +1,7 @@
 package cn.andylhl.xy.service.edu.mapper;
 
 import cn.andylhl.xy.service.edu.entity.Course;
+import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -33,4 +34,11 @@ public interface CourseMapper extends BaseMapper<Course> {
             // mp会自动组装queryWrapper
             // @Param(Constants.WRAPPER) 和 xml文件中的 ${ew.customSqlSegment} 对应
             @Param(Constants.WRAPPER) QueryWrapper<CourseQueryVO> queryWrapper);
+
+    /**
+     * 获取课程发布基本信息
+     * @param id
+     * @return
+     */
+    CoursePublishVO selectCoursePublishInfo(String id);
 }

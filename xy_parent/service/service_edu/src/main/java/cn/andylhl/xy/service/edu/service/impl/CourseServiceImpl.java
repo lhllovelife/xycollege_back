@@ -3,6 +3,7 @@ package cn.andylhl.xy.service.edu.service.impl;
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.edu.entity.*;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
+import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
 import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
@@ -225,5 +226,17 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         // 删除课程信息本身 course
         return this.removeById(id);
+    }
+
+    /**
+     * 获取课程发布基本信息
+     * @param id
+     * @return
+     */
+    @Override
+    public CoursePublishVO getCoursePublishInfo(String id) {
+
+        return baseMapper.selectCoursePublishInfo(id);
+
     }
 }

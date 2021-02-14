@@ -2,6 +2,7 @@ package cn.andylhl.xy.service.edu.service;
 
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
+import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -58,4 +59,11 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     Boolean removeCourseById(String id);
+
+    /**
+     * 获取课程发布基本信息
+     * @param id
+     * @return
+     */
+    CoursePublishVO getCoursePublishInfo(String id);
 }
