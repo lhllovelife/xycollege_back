@@ -54,7 +54,7 @@ public class Teacher extends BaseEntity {
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
     @TableField("is_deleted") // 将deleted属性映射数据库表中的is_deleted字段
-    @TableLogic
+    @TableLogic // 逻辑删除注解
     private Boolean deleted;
 
 

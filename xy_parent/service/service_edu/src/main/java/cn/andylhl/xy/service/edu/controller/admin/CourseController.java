@@ -94,6 +94,28 @@ public class CourseController {
         return R.ok().data("total", total).data("rows", teacherList);
     }
 
+    @ApiOperation("根据id删除课程")
+    @DeleteMapping("/remove/{id}")
+    public R removeCourseById(
+            @ApiParam(value = "课程id") @PathVariable("id") String id
+    ) {
+        log.info("进入service_edu, 根据id删除课程");
+        // TODO 删除课程视频
+
+        // 删除课程封面
+        courseService.removeCoverById(id);
+
+        // 删除课程相关数据（数据库层面）
+        Boolean reslult = courseService.removeCourseById(id);
+
+        if (reslult) {
+            return R.ok().message("删除成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
+
+    }
+
 }
 /*
 

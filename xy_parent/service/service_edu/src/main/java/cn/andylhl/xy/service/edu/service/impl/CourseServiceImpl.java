@@ -1,13 +1,12 @@
 package cn.andylhl.xy.service.edu.service.impl;
 
-import cn.andylhl.xy.service.edu.entity.Course;
-import cn.andylhl.xy.service.edu.entity.CourseDescription;
-import cn.andylhl.xy.service.edu.entity.excel.ExcelSubjectData;
+import cn.andylhl.xy.common.base.result.R;
+import cn.andylhl.xy.service.edu.entity.*;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
-import cn.andylhl.xy.service.edu.mapper.CourseDescriptionMapper;
-import cn.andylhl.xy.service.edu.mapper.CourseMapper;
+import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
+import cn.andylhl.xy.service.edu.mapper.*;
 import cn.andylhl.xy.service.edu.service.CourseService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +34,24 @@ import java.util.List;
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements CourseService {
 
     @Autowired
+    private OssFileRemoteService ossFileRemoteService;
+
+    @Autowired
     private CourseDescriptionMapper courseDescriptionMapper;
+
+    @Autowired
+    private VideoMapper videoMapper;
+
+    @Autowired
+    private ChapterMapper chapterMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Autowired
+    private CourseCollectMapper courseCollectMapper;
+
+
 
     /**
      * 保存课程基本信息
@@ -155,5 +170,60 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         List<CourseVO> courseVOList = baseMapper.selectPageByCourseQueryVO(pageInfo, queryWrapper);
 
         return pageInfo.setRecords(courseVOList);
+    }
+
+    /**
+     * 删除课程封面
+     * @param id
+     */
+    @Override
+    public Boolean removeCoverById(String id) {
+        Course course = baseMapper.selectById(id);
+        // 判断是否存在该课程信息
+        if (course != null) {
+            String cover = course.getCover();
+            // 判断是否有封面地址
+            if (!StringUtils.isEmpty(cover)) {
+                R r = ossFileRemoteService.removeFile(cover);
+                return r.getSuccess();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 删除课程相关数据（数据库层面）
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public Boolean removeCourseById(String id) {
+
+        // 删除课时信息 video
+        QueryWrapper<Video> videoQueryWrapper = new QueryWrapper<>();
+        videoQueryWrapper.eq("course_id", id);
+        videoMapper.delete(videoQueryWrapper);
+
+        // 删除章节信息 chapter
+        QueryWrapper<Chapter> chapterQueryWrapper = new QueryWrapper<>();
+        chapterQueryWrapper.eq("course_id", id);
+        chapterMapper.delete(chapterQueryWrapper);
+
+        // 删除课程评论 comment
+        QueryWrapper<Comment> commentQueryWrapper = new QueryWrapper<>();
+        commentQueryWrapper.eq("course_id", id);
+        commentMapper.delete(commentQueryWrapper);
+
+        // 删除课程收藏 collection
+        QueryWrapper<CourseCollect> courseCollectQueryWrapper = new QueryWrapper<>();
+        courseCollectQueryWrapper.eq("course_id", id);
+        courseCollectMapper.delete(courseCollectQueryWrapper);
+
+        // 删除课程描述 description
+        courseDescriptionMapper.deleteById(id);
+
+        // 删除课程信息本身 course
+        return this.removeById(id);
     }
 }

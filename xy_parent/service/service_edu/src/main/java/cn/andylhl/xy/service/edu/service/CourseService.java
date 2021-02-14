@@ -45,4 +45,17 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     Page<CourseVO> selectPage(Long page, Long limit, CourseQueryVO courseQueryVO);
+
+    /**
+     * 删除课程封面
+     * @param id
+     */
+    Boolean removeCoverById(String id);
+
+    /**
+     * 删除课程相关数据（数据库层面）
+     * @param id
+     * @return
+     */
+    Boolean removeCourseById(String id);
 }
