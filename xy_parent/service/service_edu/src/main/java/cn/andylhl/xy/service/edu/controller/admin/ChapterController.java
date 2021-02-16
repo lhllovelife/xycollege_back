@@ -3,6 +3,7 @@ package cn.andylhl.xy.service.edu.controller.admin;
 
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.edu.entity.Chapter;
+import cn.andylhl.xy.service.edu.entity.vo.ChapterVO;
 import cn.andylhl.xy.service.edu.service.ChapterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -87,6 +90,18 @@ public class ChapterController {
         } else {
             return R.error().message("数据不存在");
         }
+    }
+
+    @ApiOperation("获取章节数据嵌套列表")
+    @GetMapping("nested-list/{courseId}")
+    public R getNestedListByCourseId(
+            @ApiParam(value = "课程id", required = true)
+            @PathVariable("courseId") String courseId) {
+        log.info("进入service_edu, 获取章节信息（嵌套数据列表）");
+
+        List<ChapterVO> chapterVOList = chapterService.getNestedListByCourseId(courseId);
+
+        return R.ok().data("items", chapterVOList);
     }
 
 }
