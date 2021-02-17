@@ -43,7 +43,7 @@ public class MediaController {
             InputStream inputStream = file.getInputStream();
             String originalFilename = file.getOriginalFilename();
             String videoId = mediaService.uploadVideo(inputStream, originalFilename);
-            return R.ok().data("videoId", videoId);
+            return R.ok().data("videoId", videoId).data("originalFilename", originalFilename);
         } catch (Exception e) {
             // 视频上传至业务服务器失败
             throw new XyCollegeException(ResultCodeEnum.VIDEO_UPLOAD_TOMCAT_ERROR);
