@@ -27,7 +27,7 @@
 		<velocity.version>2.0</velocity.version>
 		<swagger.version>2.7.0</swagger.version>
 		<kinfe4j.version>2.0.7</kinfe4j.version>
-		<aliyun.oss.version>3.8.0</aliyun.oss.version>
+		<aliyun.oss.version>3.1.0</aliyun.oss.version>
 		<jodatime.version>2.10.1</jodatime.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 		<commons-io.version>2.6</commons-io.version>
@@ -170,11 +170,11 @@
 				<version>${aliyun-java-sdk-vod.version}</version>
 			</dependency>
 
-			<!--<dependency>-->
-			<!--<groupId>com.aliyun</groupId>-->
-			<!--<artifactId>aliyun-sdk-vod-upload</artifactId>-->
-			<!--<version>${aliyun-sdk-vod-upload.version}</version>-->
-			<!--</dependency>-->
+			<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-sdk-vod-upload</artifactId>
+			<version>${aliyun-sdk-vod-upload.version}</version>
+			</dependency>
 
 			<!--json-->
 			<dependency>
