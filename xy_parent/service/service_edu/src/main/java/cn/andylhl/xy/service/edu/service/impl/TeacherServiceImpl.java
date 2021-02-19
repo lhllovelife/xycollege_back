@@ -1,9 +1,11 @@
 package cn.andylhl.xy.service.edu.service.impl;
 
 import cn.andylhl.xy.common.base.result.R;
+import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.Teacher;
 import cn.andylhl.xy.service.edu.entity.vo.TeacherQueryVO;
 import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
+import cn.andylhl.xy.service.edu.mapper.CourseMapper;
 import cn.andylhl.xy.service.edu.mapper.TeacherMapper;
 import cn.andylhl.xy.service.edu.service.TeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,9 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     @Autowired
     private OssFileRemoteService ossFileRemoteService;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     /**
      * 执行分页, 返回分页对象信息
@@ -118,5 +124,27 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         }
         // 不满足条件则返回false
         return false;
+    }
+
+    /**
+     * 根据id获取讲师及其主讲课程信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Map<String, Object> getTeacherInfoandCourseInfoById(String id) {
+
+        Map<String, Object> map = new HashMap<>();
+        // 获取讲师信息
+        Teacher teacher = baseMapper.selectById(id);
+        // 获取该讲师主讲的课程信息集合
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("teacher_id", id);
+        List<Course> courseList = courseMapper.selectList(queryWrapper);
+
+        map.put("teacher", teacher);
+        map.put("courseList", courseList);
+
+        return map;
     }
 }

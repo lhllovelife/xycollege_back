@@ -94,8 +94,8 @@ public class MediaServiceImpl implements MediaService {
                 log.info("第" + (++cnt) + "组：" + idListStr.toString());
                 //支持传入多个视频ID，多个用逗号分隔
                 request.setVideoIds(idListStr.toString());
-                // 删除视频响应数据
-                DeleteVideoResponse response = client.getAcsResponse(request);
+                // 删除视频
+                client.getAcsResponse(request);
                 // 清空idListStr
                 idListStr = new StringBuffer();
             } else if (i % 20 > 0) {
