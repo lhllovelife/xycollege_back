@@ -3,16 +3,22 @@ package cn.andylhl.xy.service.vod.service.impl;
 import cn.andylhl.xy.common.base.exception.XyCollegeException;
 import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.service.vod.service.MediaService;
+import cn.andylhl.xy.service.vod.util.AliyunVodSDKUtils;
 import cn.andylhl.xy.service.vod.util.VodProperties;
 import com.aliyun.vod.upload.impl.UploadVideoImpl;
 import com.aliyun.vod.upload.req.UploadStreamRequest;
 import com.aliyun.vod.upload.resp.UploadStreamResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.List;
 
 /***
  * @Title: MediaServiceImpl
@@ -57,40 +63,47 @@ public class MediaServiceImpl implements MediaService {
     }
 
     /**
-     * 上传视频可设置的参数
+     * 根据videoId集合删除视频
+     *
+     * @param videoIdList
+     * @throws ClientException
      */
-    private static void testUploadStream() {
+    @Override
+    public void removeVideoByIdList(List<String> videoIdList) throws ClientException {
 
-        /* 是否使用默认水印(可选)，指定模板组ID时，根据模板组配置确定是否使用默认水印*/
-        //request.setShowWaterMark(true);
-        /* 设置上传完成后的回调URL(可选)，建议通过点播控制台配置消息监听事件，参见文档 https://help.aliyun.com/document_detail/57029.html */
-        //request.setCallback("http://callback.sample.com");
-        /* 自定义消息回调设置，参数说明参考文档 https://help.aliyun.com/document_detail/86952.html#UserData */
-        //request.setUserData(""{\"Extend\":{\"test\":\"www\",\"localId\":\"xxxx\"},\"MessageCallback\":{\"CallbackURL\":\"http://test.test.com\"}}"");
-        /* 视频分类ID(可选) */
-        //request.setCateId(0);
-        /* 视频标签,多个用逗号分隔(可选) */
-        //request.setTags("标签1,标签2");
-        /* 视频描述(可选) */
-        //request.setDescription("视频描述");
-        /* 封面图片(可选) */
-        //request.setCoverURL("http://cover.sample.com/sample.jpg");
-        /* 模板组ID(可选) */
-        //request.setTemplateGroupId("8c4792cbc8694e7084fd5330e56a33d");
-        /* 工作流ID(可选) */
-        //request.setWorkflowId("d4430d07361f0*be1339577859b0177b");
-        /* 存储区域(可选) */
-        //request.setStorageLocation("in-201703232118266-5sejdln9o.oss-cn-shanghai.aliyuncs.com");
-        /* 开启默认上传进度回调 */
-        // request.setPrintProgress(true);
-        /* 设置自定义上传进度回调 (必须继承 VoDProgressListener) */
-        // request.setProgressListener(new PutObjectProgressListener());
-        /* 设置应用ID*/
-        //request.setAppId("app-1000000");
-        /* 点播服务接入点 */
-        //request.setApiRegionId("cn-shanghai");
-        /* ECS部署区域*/
-        // request.setEcsRegionId("cn-shanghai");
+        //1.  初始化client
+        DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(vodProperties.getKeyId(), vodProperties.getKeySecret());
+        DeleteVideoRequest request = new DeleteVideoRequest();
 
+        //2.准备videoId数据
+        //  视频ID列表。多个ID使用英文逗号（,）分隔。最多支持20个。
+        StringBuffer idListStr = new StringBuffer();
+
+        int size = videoIdList.size();
+
+        // 遍历数组，拼接数据
+        // size = 10  1 10
+        // size = 20  1 20
+        // size = n * 20 + m
+        int cnt = 0;
+        for (int i = 1; i <= size; i++) {
+
+            if (i % 20 == 0 || i == size) {
+                // 当为20的整数倍，或者达到最后一个时执行删除
+                idListStr.append(videoIdList.get(i - 1));
+                log.info("第" + (++cnt) + "组：" + idListStr.toString());
+                //支持传入多个视频ID，多个用逗号分隔
+                request.setVideoIds(idListStr.toString());
+                // 删除视频响应数据
+                DeleteVideoResponse response = client.getAcsResponse(request);
+                // 清空idListStr
+                idListStr = new StringBuffer();
+            } else if (i % 20 > 0) {
+                // 拼接数据
+                idListStr.append(videoIdList.get(i - 1));
+                idListStr.append(",");
+            }
+        }
     }
+
 }

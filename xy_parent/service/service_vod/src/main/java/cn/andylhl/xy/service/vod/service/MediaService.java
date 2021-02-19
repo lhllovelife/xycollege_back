@@ -1,6 +1,9 @@
 package cn.andylhl.xy.service.vod.service;
 
+import com.aliyuncs.exceptions.ClientException;
+
 import java.io.InputStream;
+import java.util.List;
 
 /***
  * @Title: MediaService
@@ -17,5 +20,12 @@ public interface MediaService {
      * @return 视频上传成功后的id
      */
     String uploadVideo(InputStream inputStream, String originalFileName);
+
+    /**
+     * 根据videoId集合删除视频
+     * @param videoIdList
+     * @return
+     */
+    void removeVideoByIdList(List<String> videoIdList) throws ClientException;
 
 }
