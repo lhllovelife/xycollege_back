@@ -2,16 +2,20 @@ package cn.andylhl.xy.service.edu.service.impl;
 
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.Video;
+import cn.andylhl.xy.service.edu.feign.VodMediaRemoteService;
 import cn.andylhl.xy.service.edu.mapper.ChapterMapper;
 import cn.andylhl.xy.service.edu.mapper.CourseMapper;
 import cn.andylhl.xy.service.edu.mapper.VideoMapper;
 import cn.andylhl.xy.service.edu.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +31,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired
+    private VodMediaRemoteService vodMediaRemoteService;
 
     /**
      * 用户点击免费，则该视频是免费的
@@ -77,5 +84,24 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
 
         return this.updateById(video);
+    }
+
+    /**
+     * 根据课时信息删除单个视频
+     * @param id
+     */
+    @Override
+    public void removeMediaByVideo(String id) {
+        // 获取课时信息
+        Video video = baseMapper.selectById(id);
+        String videoSourceId = video.getVideoSourceId();
+        // 如果videoSourceId不为空
+        if (!StringUtils.isEmpty(videoSourceId)) {
+            List<String> videoIdList = new ArrayList<>();
+            videoIdList.add(videoSourceId);
+            log.info("执行删除：videoIdList: " + videoIdList);
+            // 调用远程服务执行删除
+            vodMediaRemoteService.removeVideo(videoIdList);
+        }
     }
 }

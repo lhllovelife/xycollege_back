@@ -4,11 +4,13 @@ import cn.andylhl.xy.service.edu.entity.Chapter;
 import cn.andylhl.xy.service.edu.entity.Video;
 import cn.andylhl.xy.service.edu.entity.vo.ChapterVO;
 import cn.andylhl.xy.service.edu.entity.vo.VideoVO;
+import cn.andylhl.xy.service.edu.feign.VodMediaRemoteService;
 import cn.andylhl.xy.service.edu.mapper.ChapterMapper;
 import cn.andylhl.xy.service.edu.mapper.VideoMapper;
 import cn.andylhl.xy.service.edu.service.ChapterService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +30,15 @@ import java.util.Map;
  * @author lhl
  * @since 2021-01-29
  */
+@Slf4j
 @Service
 public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> implements ChapterService {
 
     @Autowired
     private VideoMapper videoMapper;
+
+    @Autowired
+    private VodMediaRemoteService vodMediaRemoteService;
 
     /**
      * 删除章节信息(该章节下的课时信息)
@@ -102,5 +108,18 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         }
 
         return chapterVOList;
+    }
+
+    /**
+     * 根据章节id，删除该章节下的所有视频
+     * @param id
+     */
+    @Override
+    public void removeMediaByChapterId(String id) {
+        List<String> videoIdList = videoMapper.selectVideoSourceIdlistByChapterId(id);
+        if (videoIdList != null && videoIdList.size() > 0) {
+            log.info("删除章节下的所有课时的视频：" + videoIdList);
+            vodMediaRemoteService.removeVideo(videoIdList);
+        }
     }
 }

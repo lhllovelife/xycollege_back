@@ -102,6 +102,7 @@ public class CourseController {
     ) {
         log.info("进入service_edu, 根据id删除课程");
         // TODO 删除课程视频
+        courseService.removeMediaByCourseId(id);
 
         // 删除课程封面
         courseService.removeCoverById(id);
@@ -149,7 +150,3 @@ public class CourseController {
 
 
 }
-/*
-
-
- */

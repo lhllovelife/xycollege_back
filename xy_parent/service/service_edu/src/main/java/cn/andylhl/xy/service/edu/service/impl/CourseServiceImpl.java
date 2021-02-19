@@ -7,6 +7,7 @@ import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
 import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
+import cn.andylhl.xy.service.edu.feign.VodMediaRemoteService;
 import cn.andylhl.xy.service.edu.mapper.*;
 import cn.andylhl.xy.service.edu.service.CourseService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -51,6 +52,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CourseCollectMapper courseCollectMapper;
+
+    @Autowired
+    private VodMediaRemoteService vodMediaRemoteService;
 
 
 
@@ -253,5 +257,18 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         course.setStatus(CourseInfoForm.COURSE_NORMAL);
 
         return this.updateById(course);
+    }
+
+    /**
+     * 根据courseId删除该课程下的所有视频
+     * @param id
+     */
+    @Override
+    public void removeMediaByCourseId(String id) {
+        List<String> videoIdList = videoMapper.selectVideoSourceIdlistByCourseId(id);
+        if (videoIdList != null && videoIdList.size() > 0) {
+            log.info("删除章节下的所有课时的视频：" + videoIdList);
+            vodMediaRemoteService.removeVideo(videoIdList);
+        }
     }
 }

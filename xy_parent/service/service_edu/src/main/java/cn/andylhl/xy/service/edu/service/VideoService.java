@@ -26,4 +26,10 @@ public interface VideoService extends IService<Video> {
      * @return
      */
     boolean updateVideo(Video video);
+
+    /**
+     * 根据课时信息删除单个视频
+     * @param id
+     */
+    void removeMediaByVideo(String id);
 }

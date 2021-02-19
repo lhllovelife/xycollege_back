@@ -29,4 +29,10 @@ public interface ChapterService extends IService<Chapter> {
      * @return
      */
     List<ChapterVO> getNestedListByCourseId(String courseId);
+
+    /**
+     * 根据章节id，删除该章节下的所有视频
+     * @param id
+     */
+    void removeMediaByChapterId(String id);
 }

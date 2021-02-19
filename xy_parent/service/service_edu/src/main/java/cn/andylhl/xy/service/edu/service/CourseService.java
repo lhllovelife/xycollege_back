@@ -73,4 +73,10 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     Boolean publishCourse(String id);
+
+    /**
+     * 根据courseId删除该课程下的所有视频
+     * @param id
+     */
+    void removeMediaByCourseId(String id);
 }

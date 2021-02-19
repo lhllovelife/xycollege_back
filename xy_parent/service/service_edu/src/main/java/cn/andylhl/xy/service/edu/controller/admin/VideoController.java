@@ -80,6 +80,7 @@ public class VideoController {
 
         // TODO 删除视频
         // 调用vod中的删除视频文件的接口
+        videoService.removeMediaByVideo(id);
 
         // 数据库层面：删除课时信息(该章节下的课时信息)
         boolean result = videoService.removeById(id);

@@ -4,7 +4,6 @@ import cn.andylhl.xy.common.base.exception.XyCollegeException;
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.service.vod.service.MediaService;
-import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class MediaController {
 
     @ApiOperation("删除视频")
     @DeleteMapping("/remove")
-    public R uploadVideo(
+    public R removeVideo(
             @ApiParam(value = "视频id集合", required = true)
             @RequestBody List<String> videoIdList) {
         log.info("进入service_vod, 删除视频");
