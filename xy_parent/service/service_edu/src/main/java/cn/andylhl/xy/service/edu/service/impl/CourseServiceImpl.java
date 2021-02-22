@@ -6,6 +6,7 @@ import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
+import cn.andylhl.xy.service.edu.entity.vo.WebCourseQueruVO;
 import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
 import cn.andylhl.xy.service.edu.feign.VodMediaRemoteService;
 import cn.andylhl.xy.service.edu.mapper.*;
@@ -72,7 +73,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         // 属性拷贝
         BeanUtils.copyProperties(courseInfoForm, course);
         // 设置状态为未发布
-        course.setStatus(CourseInfoForm.COURSE_DRAFT);
+        course.setStatus(Course.COURSE_DRAFT);
         baseMapper.insert(course);
 
         // 2. 保存课程描述
@@ -254,7 +255,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public Boolean publishCourse(String id) {
         Course course = new Course();
         course.setId(id);
-        course.setStatus(CourseInfoForm.COURSE_NORMAL);
+        course.setStatus(Course.COURSE_NORMAL);
 
         return this.updateById(course);
     }
@@ -270,5 +271,54 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             log.info("删除章节下的所有课时的视频：" + videoIdList);
             vodMediaRemoteService.removeVideo(videoIdList);
         }
+    }
+
+    /**
+     * 网站端课程列表查询（参数可选）
+     * @param webCourseQueruVO
+     * @return
+     */
+    @Override
+    public List<Course> webGetCourseList(WebCourseQueruVO webCourseQueruVO) {
+
+        // 准备查询参数
+        String subjectParentId = webCourseQueruVO.getSubjectParentId();
+        String subjectId = webCourseQueruVO.getSubjectId();
+        String buyCountSort = webCourseQueruVO.getBuyCountSort();
+        String gmtCreateSort = webCourseQueruVO.getGmtCreateSort();
+        String priceSort = webCourseQueruVO.getPriceSort();
+        Integer priceSortType = webCourseQueruVO.getPriceSortType();
+
+        // 根据查询参数是否有值，进行查询条件的组装
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        // 查询已发布的课程(隐含条件)
+        queryWrapper.eq("status", Course.COURSE_NORMAL);
+
+        if (!StringUtils.isEmpty(subjectParentId)) {
+            queryWrapper.eq("subject_parent_id", subjectParentId);
+        }
+
+        if (!StringUtils.isEmpty(subjectId)) {
+            queryWrapper.eq("subject_id", subjectId);
+        }
+
+        if (!StringUtils.isEmpty(buyCountSort)) {
+            // 默认按照购买量降序排序
+            queryWrapper.orderByDesc("buy_count");
+        }
+
+        if (!StringUtils.isEmpty(gmtCreateSort)) {
+            queryWrapper.orderByDesc("gmt_create");
+        }
+
+        if (!StringUtils.isEmpty(priceSort)) {
+            if (priceSortType == null || priceSortType == WebCourseQueruVO.PRICE_SORT_DESC) {
+                queryWrapper.orderByDesc("price");
+            } else if (priceSortType == WebCourseQueruVO.PRICE_SORT_ASC) {
+                queryWrapper.orderByAsc("price");
+            }
+        }
+
+        return baseMapper.selectList(queryWrapper);
     }
 }

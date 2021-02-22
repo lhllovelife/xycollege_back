@@ -5,8 +5,11 @@ import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
+import cn.andylhl.xy.service.edu.entity.vo.WebCourseQueruVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -79,4 +82,10 @@ public interface CourseService extends IService<Course> {
      * @param id
      */
     void removeMediaByCourseId(String id);
+
+    /**
+     * 网站端课程列表查询（参数可选）
+     * @return
+     */
+    List<Course> webGetCourseList(WebCourseQueruVO webCourseQueruVO);
 }

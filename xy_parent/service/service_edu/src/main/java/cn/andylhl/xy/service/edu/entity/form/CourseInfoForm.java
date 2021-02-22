@@ -21,8 +21,8 @@ public class CourseInfoForm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 课程状态 Draft未发布  Normal已发布
-    public static final String COURSE_DRAFT = "Draft";
-    public static final String COURSE_NORMAL = "Normal";
+//    public static final String COURSE_DRAFT = "Draft";
+//    public static final String COURSE_NORMAL = "Normal";
 
     @ApiModelProperty(value = "课程ID")
     private String id;
