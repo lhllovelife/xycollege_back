@@ -4,6 +4,7 @@ import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
+import cn.andylhl.xy.service.edu.entity.vo.WebCourseVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
@@ -43,4 +44,11 @@ public interface CourseMapper extends BaseMapper<Course> {
      * @return
      */
     CoursePublishVO selectCoursePublishInfo(String id);
+
+    /**
+     * 查询课程信息和讲师信息
+     * @param id
+     * @return
+     */
+    WebCourseVO selectWebCourseVOById(String id);
 }

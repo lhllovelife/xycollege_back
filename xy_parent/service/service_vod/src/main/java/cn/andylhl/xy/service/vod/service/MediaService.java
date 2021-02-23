@@ -4,6 +4,7 @@ import com.aliyuncs.exceptions.ClientException;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /***
  * @Title: MediaService
@@ -28,4 +29,10 @@ public interface MediaService {
      */
     void removeVideoByIdList(List<String> videoIdList) throws ClientException;
 
+    /**
+     * 获取视频播放地址和封面地址
+     * @param videoSourceId
+     * @return
+     */
+    Map<String, Object> getPlayUrlAndCoverUrl(String videoSourceId) throws ClientException;
 }

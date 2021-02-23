@@ -2,6 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.andylhl.xy.service.edu.mapper.CourseMapper">
 
+    <!--
+    查询课程信息和讲师信息
+    WebCourseVO selectWebCourseVOById(String id);
+    -->
+    <select id="selectWebCourseVOById" parameterType="String" resultType="cn.andylhl.xy.service.edu.entity.vo.WebCourseVO">
+        select
+            c.id as id,
+            c.title as title,
+            c.price as price,
+            c.lesson_num as lessonNum,
+            c.cover as cover,
+            c.buy_count as buyCount,
+            c.view_count as viewCount,
+            cd.description as description,
+            c.teacher_id as teacherId,
+            t.name as teacherName,
+            t.intro as intro,
+            t.avatar as avatar,
+            c.subject_parent_id as subjectLevelOneId,
+            s1.title as subjectLevelOne,
+            c.subject_id as subjectLevelTwoId,
+            s2.title as subjectLevelTwo
+        from
+                edu_course c
+            left join
+                edu_teacher t
+            on
+                c.teacher_id = t.id
+            left join
+                edu_subject s1
+            on
+                c.subject_parent_id = s1.id
+            left join
+                edu_subject s2
+            on
+                c.subject_id = s2.id
+            left join
+                edu_course_description cd
+            on
+                c.id = cd.id
+        where
+            c.id = #{id}
+    </select>
+
     <!--获取课程发布基本信息-->
     <select id="selectCoursePublishInfo" parameterType="String" resultType="cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO">
         select

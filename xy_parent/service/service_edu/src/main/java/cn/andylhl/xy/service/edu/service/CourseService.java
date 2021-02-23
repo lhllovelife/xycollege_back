@@ -2,10 +2,7 @@ package cn.andylhl.xy.service.edu.service;
 
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
-import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
-import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
-import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
-import cn.andylhl.xy.service.edu.entity.vo.WebCourseQueruVO;
+import cn.andylhl.xy.service.edu.entity.vo.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -88,4 +85,11 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     List<Course> webGetCourseList(WebCourseQueruVO webCourseQueruVO);
+
+    /**
+     * 查询课程信息和讲师信息
+     * @param id
+     * @return
+     */
+    WebCourseVO webGetWebCourseVOById(String id);
 }

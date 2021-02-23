@@ -3,10 +3,7 @@ package cn.andylhl.xy.service.edu.service.impl;
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.edu.entity.*;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
-import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
-import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
-import cn.andylhl.xy.service.edu.entity.vo.CourseVO;
-import cn.andylhl.xy.service.edu.entity.vo.WebCourseQueruVO;
+import cn.andylhl.xy.service.edu.entity.vo.*;
 import cn.andylhl.xy.service.edu.feign.OssFileRemoteService;
 import cn.andylhl.xy.service.edu.feign.VodMediaRemoteService;
 import cn.andylhl.xy.service.edu.mapper.*;
@@ -320,5 +317,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
 
         return baseMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 查询课程信息和讲师信息
+     * @param id
+     * @return
+     */
+    @Override
+    public WebCourseVO webGetWebCourseVOById(String id) {
+
+        // 更新课程浏览数量
+        Course course = baseMapper.selectById(id);
+        course.setViewCount(course.getViewCount() + 1);
+        baseMapper.updateById(course);
+
+        // 获取课程信息
+        WebCourseVO webCourseVO = baseMapper.selectWebCourseVOById(id);
+
+        return webCourseVO;
     }
 }

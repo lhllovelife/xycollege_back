@@ -12,13 +12,18 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import com.aliyuncs.vod.model.v20170321.GetPlayInfoRequest;
+import com.aliyuncs.vod.model.v20170321.GetPlayInfoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.MaskFormatter;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /***
  * @Title: MediaServiceImpl
@@ -106,4 +111,37 @@ public class MediaServiceImpl implements MediaService {
         }
     }
 
+
+    /**
+     * 获取视频播放地址和封面地址
+     * @param videoSourceId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getPlayUrlAndCoverUrl(String videoSourceId) throws ClientException {
+
+        Map<String, Object> map = new HashMap<>();
+
+        // 1. 初始化client对象
+        DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(vodProperties.getKeyId(), vodProperties.getKeySecret());
+
+        // 2. 创建请求对象
+        GetPlayInfoRequest request = new GetPlayInfoRequest();
+        request.setVideoId(videoSourceId);
+
+        // 3. 获取响应
+        GetPlayInfoResponse response = client.getAcsResponse(request);
+
+        //播放地址
+        List<GetPlayInfoResponse.PlayInfo> playInfoList = response.getPlayInfoList();
+        String playUrl = playInfoList.get(0).getPlayURL();
+        map.put("playUrl", playUrl);
+
+        // 获取封面地址信息
+        GetPlayInfoResponse.VideoBase videoBase = response.getVideoBase();
+        String coverUrl = videoBase.getCoverURL();
+        map.put("coverUrl", coverUrl);
+
+        return map;
+    }
 }

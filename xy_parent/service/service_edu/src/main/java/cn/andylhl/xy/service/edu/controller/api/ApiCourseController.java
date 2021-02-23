@@ -2,9 +2,11 @@ package cn.andylhl.xy.service.edu.controller.api;
 
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.edu.entity.Course;
-import cn.andylhl.xy.service.edu.entity.Subject;
+import cn.andylhl.xy.service.edu.entity.vo.ChapterVO;
 import cn.andylhl.xy.service.edu.entity.vo.SubjectVO;
 import cn.andylhl.xy.service.edu.entity.vo.WebCourseQueruVO;
+import cn.andylhl.xy.service.edu.entity.vo.WebCourseVO;
+import cn.andylhl.xy.service.edu.service.ChapterService;
 import cn.andylhl.xy.service.edu.service.CourseService;
 import cn.andylhl.xy.service.edu.service.SubjectService;
 import io.swagger.annotations.Api;
@@ -36,6 +38,9 @@ public class ApiCourseController {
     @Autowired
     private SubjectService subjectService;
 
+    @Autowired
+    private ChapterService chapterService;
+
     /**
      * 网站端课程列表查询（参数可选）
      * @return
@@ -63,6 +68,25 @@ public class ApiCourseController {
         List<SubjectVO> subjectNestedList = subjectService.getSubjectNestedList();
 
         return R.ok().data("subjectNestedList", subjectNestedList);
+    }
+
+    /**
+     * 课程详情
+     * @return
+     */
+    @ApiOperation("根据id查询课程")
+    @GetMapping("/get/{id}")
+    public R getById(@ApiParam(value = "课程id", required = true)
+                         @PathVariable("id") String id) {
+        log.info("进入service_edu, 根据id查询课程");
+
+        // 查询课程信息和讲师信息
+        WebCourseVO webCourseVO = courseService.webGetWebCourseVOById(id);
+
+        // 查询章节信息
+        List<ChapterVO> chapterVOList = chapterService.getNestedListByCourseId(id);
+
+        return R.ok().data("webCourseVO", webCourseVO).data("chapterVOList", chapterVOList);
     }
 
 
