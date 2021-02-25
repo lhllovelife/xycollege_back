@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -152,6 +153,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
      * 获取首页4个热门讲师（sort字段排序的前4个）
      * @return
      */
+    @Cacheable(value = "index", key = "'getHotTeacherList'")
     @Override
     public List<Teacher> getHotTeacherList() {
 

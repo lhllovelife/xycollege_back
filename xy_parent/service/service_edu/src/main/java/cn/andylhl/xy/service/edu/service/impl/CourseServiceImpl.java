@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -343,6 +344,10 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
      * order by view_count limit 0 8
      * @return
      */
+    // redis缓存注解
+    // 下次请求时，如果缓存存在，则直接读取缓存数据返回；
+    // 如果缓存不存在，则执行方法，并把返回的结果存入缓存中。一般用在查询方法上。
+    @Cacheable(value = "index", key = "'getHotCourseList'")
     @Override
     public List<Course> getHotCourseList() {
 

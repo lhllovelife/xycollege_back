@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,6 +81,10 @@ public class AdServiceImpl extends ServiceImpl<AdMapper, Ad> implements AdServic
      * @param adTypeId
      * @return
      */
+    // redis缓存注解
+    // 下次请求时，如果缓存存在，则直接读取缓存数据返回；
+    // 如果缓存不存在，则执行方法，并把返回的结果存入缓存中。一般用在查询方法上。
+    @Cacheable(value = "index", key = "'getAdListByAdTypeId'")
     @Override
     public List<Ad> getAdListByAdTypeId(String adTypeId) {
 
