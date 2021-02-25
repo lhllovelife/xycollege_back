@@ -337,4 +337,20 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         return webCourseVO;
     }
+
+    /**
+     * 获取首页热门8个课程（浏览量最高的8个）
+     * order by view_count limit 0 8
+     * @return
+     */
+    @Override
+    public List<Course> getHotCourseList() {
+
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("view_count");
+        // 将sql拼接在最后
+        queryWrapper.last("limit 0, 8");
+
+        return baseMapper.selectList(queryWrapper);
+    }
 }

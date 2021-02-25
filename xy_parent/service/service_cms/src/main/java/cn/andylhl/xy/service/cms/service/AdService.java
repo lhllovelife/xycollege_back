@@ -5,6 +5,8 @@ import cn.andylhl.xy.service.cms.entity.vo.AdVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 广告推荐 服务类
@@ -28,4 +30,11 @@ public interface AdService extends IService<Ad> {
      * @param id
      */
     boolean removeAdImageById(String id);
+
+    /**
+     * 根据推荐位id查询广告推荐
+     * @param adTypeId
+     * @return
+     */
+    List<Ad> getAdListByAdTypeId(String adTypeId);
 }

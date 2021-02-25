@@ -92,4 +92,10 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     WebCourseVO webGetWebCourseVOById(String id);
+
+    /**
+     * 获取首页热门8个课程（浏览量最高的8个）
+     * @return
+     */
+    List<Course> getHotCourseList();
 }

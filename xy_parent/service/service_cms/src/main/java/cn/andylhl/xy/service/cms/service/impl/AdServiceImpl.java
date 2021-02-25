@@ -75,4 +75,18 @@ public class AdServiceImpl extends ServiceImpl<AdMapper, Ad> implements AdServic
         return false;
     }
 
+    /**
+     * 根据推荐位id查询广告推荐
+     * @param adTypeId
+     * @return
+     */
+    @Override
+    public List<Ad> getAdListByAdTypeId(String adTypeId) {
+
+        QueryWrapper<Ad> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type_id", adTypeId);
+        // 排序，先按照sort字段，再按照id字段
+        queryWrapper.orderByAsc("sort", "id");
+        return baseMapper.selectList(queryWrapper);
+    }
 }

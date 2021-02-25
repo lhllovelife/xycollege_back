@@ -147,4 +147,18 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
         return map;
     }
+
+    /**
+     * 获取首页4个热门讲师（sort字段排序的前4个）
+     * @return
+     */
+    @Override
+    public List<Teacher> getHotTeacherList() {
+
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort");
+        queryWrapper.last("limit 0, 4");
+
+        return baseMapper.selectList(queryWrapper);
+    }
 }
