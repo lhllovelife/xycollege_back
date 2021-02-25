@@ -2,7 +2,6 @@ package cn.andylhl.xy.service.cms.controller.admin;
 
 
 import cn.andylhl.xy.common.base.result.R;
-import cn.andylhl.xy.service.cms.entity.Ad;
 import cn.andylhl.xy.service.cms.entity.AdType;
 import cn.andylhl.xy.service.cms.service.AdTypeService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -43,7 +42,7 @@ public class AdTypeController {
 
     @ApiOperation("推荐位分页列表")
     @GetMapping("/list/{page}/{limit}")
-    public R listPageTeacher(
+    public R listPageAdType(
             @ApiParam(value = "页码", required = true) @PathVariable("page") Long page,
             @ApiParam(value = "每页显示记录数", required = true) @PathVariable("limit") Long limit) {
         log.info("进入service_cms, 分页查询推荐位");
