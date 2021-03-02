@@ -50,6 +50,7 @@ public enum ResultCodeEnum {
     CODE_ERROR(false, 28000, "验证码错误"),
 
     LOGIN_PHONE_ERROR(false, 28009, "手机号码不正确"),
+    LOGIN_EMAIL_ERROR(false, 28010, "邮箱地址不正确"),
     LOGIN_MOBILE_ERROR(false, 28001, "账号不正确"),
     LOGIN_PASSWORD_ERROR(false, 28008, "密码不正确"),
     LOGIN_DISABLED_ERROR(false, 28002, "该用户已被禁用"),
@@ -57,7 +58,8 @@ public enum ResultCodeEnum {
     LOGIN_AUTH(false, 28004, "需要登录"),
     LOGIN_ACL(false, 28005, "没有权限"),
     SMS_SEND_ERROR(false, 28006, "短信发送失败"),
-    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28007, "短信发送过于频繁");
+    EMAIL_SEND_ERROR(false, 28007, "邮件发送失败"),
+    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28008, "短信发送过于频繁");
 
 
     private Boolean success;

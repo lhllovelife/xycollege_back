@@ -7,6 +7,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,6 +48,13 @@ public class TestAliyuOss {
         System.out.println(location);
         // 关闭OSSClient。
         ossClient.shutdown();
+    }
+
+    @Test
+    public void testPassword() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode("123");
+        System.out.println(encode);
     }
 
 }

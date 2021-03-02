@@ -16,6 +16,8 @@
         <module>service_oss</module>
         <module>service_vod</module>
         <module>service_cms</module>
+        <module>service_sms</module>
+        <module>service_ucenter</module>
     </modules>
 
     <artifactId>service</artifactId>
@@ -66,15 +68,15 @@
         </dependency>
 
         <!--swagger-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger2</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.springfox</groupId>-->
+        <!--            <artifactId>springfox-swagger2</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.springfox</groupId>-->
+        <!--            <artifactId>springfox-swagger-ui</artifactId>-->
+        <!--        </dependency>-->
 
         <!--knife4j-->
         <dependency>

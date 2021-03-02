@@ -9,7 +9,8 @@ spring:
     active: dev # 环境配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.37:3306/xy_edu?useUnicode=true&characterEncoding=UTF-8
+#    url: jdbc:mysql://192.168.1.37:3306/xy_edu?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.43.193:3306/xy_edu?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 333
   jackson: #返回json的全局时间格式
@@ -19,7 +20,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.1.37:8848 # 注册中心nacos服务地址
+        server-addr: 192.168.43.193:8848 # 注册中心nacos服务地址
 #spring:
 # cloud:
     sentinel:
@@ -28,7 +29,7 @@ spring:
         dashboard: 127.0.0.1:8080 # 指定sentinel控制台服务的地址
 #spring:
   redis:
-    host: 192.168.1.37
+    host: 192.168.43.193
     port: 6379
     database: 0
 #    password:  #默认为空
