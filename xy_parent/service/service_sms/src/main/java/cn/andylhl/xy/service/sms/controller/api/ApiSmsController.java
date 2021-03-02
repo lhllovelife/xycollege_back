@@ -46,7 +46,7 @@ public class ApiSmsController {
         // 校验邮箱格式是否合法
         if (StringUtils.isEmpty(email) ||  !FormUtils.isEmail(email)) {
             log.error("请输入正确的邮箱地址");
-            throw new XyCollegeException(ResultCodeEnum.LOGIN_EMAIL_ERROR);
+            throw new XyCollegeException(ResultCodeEnum.EMAIL_FORMAT_ERROR);
         }
 
         // 生成验证码

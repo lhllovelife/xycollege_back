@@ -59,7 +59,8 @@ public enum ResultCodeEnum {
     LOGIN_ACL(false, 28005, "没有权限"),
     SMS_SEND_ERROR(false, 28006, "短信发送失败"),
     EMAIL_SEND_ERROR(false, 28007, "邮件发送失败"),
-    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28008, "短信发送过于频繁");
+    EMAIL_FORMAT_ERROR(false, 28008, "邮箱地址格式不正确"),
+    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28009, "短信发送过于频繁");
 
 
     private Boolean success;

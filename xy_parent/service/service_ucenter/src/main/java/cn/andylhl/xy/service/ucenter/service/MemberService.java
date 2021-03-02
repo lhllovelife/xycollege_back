@@ -1,6 +1,7 @@
 package cn.andylhl.xy.service.ucenter.service;
 
 import cn.andylhl.xy.service.ucenter.entity.Member;
+import cn.andylhl.xy.service.ucenter.entity.vo.LoginVO;
 import cn.andylhl.xy.service.ucenter.entity.vo.RegisterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,4 +20,11 @@ public interface MemberService extends IService<Member> {
      * @param registerVO
      */
     void register(RegisterVO registerVO);
+
+    /**
+     * 会员登录
+     * @param loginVO
+     * @return
+     */
+    String login(LoginVO loginVO);
 }
