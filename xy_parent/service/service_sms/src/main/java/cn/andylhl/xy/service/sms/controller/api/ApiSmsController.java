@@ -3,9 +3,9 @@ package cn.andylhl.xy.service.sms.controller.api;
 import cn.andylhl.xy.common.base.exception.XyCollegeException;
 import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.result.ResultCodeEnum;
+import cn.andylhl.xy.common.base.util.FormUtils;
+import cn.andylhl.xy.common.base.util.RandomUtils;
 import cn.andylhl.xy.service.sms.service.SmsService;
-import cn.andylhl.xy.service.sms.util.FormUtils;
-import cn.andylhl.xy.service.sms.util.RandomUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -44,7 +44,7 @@ public class ApiSmsController {
         log.info("进入service_sms, 邮件发送");
 
         // 校验邮箱格式是否合法
-        if (!StringUtils.isEmpty(email) ||  !FormUtils.isEmail(email)) {
+        if (StringUtils.isEmpty(email) ||  !FormUtils.isEmail(email)) {
             log.error("请输入正确的邮箱地址");
             throw new XyCollegeException(ResultCodeEnum.LOGIN_EMAIL_ERROR);
         }
