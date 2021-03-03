@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "gitee",
+      "type": "cn.andylhl.xy.service.ucenter.util.GiteeProperties",
+      "sourceType": "cn.andylhl.xy.service.ucenter.util.GiteeProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "gitee.client-id",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.ucenter.util.GiteeProperties"
+    },
+    {
+      "name": "gitee.client-secret",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.ucenter.util.GiteeProperties"
+    },
+    {
+      "name": "gitee.redirect-uri",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.ucenter.util.GiteeProperties"
+    }
+  ],
+  "hints": []
+}

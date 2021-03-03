@@ -63,4 +63,4 @@ feign:
 gitee:
   clientId: 5658d60a293652f601eceb65e593b1d976806059acbe172977d328dff271f438
   clientSecret: 320659ba42349b2f84b3a637941728cd0070ac0aa1b43caafa5c9d974be9a407
-  redirectUri: http://localhost:8160/ucenter/callback # 应用回调地址（用户授权后，重定向的地址）
+  redirectUri: http://localhost:8160/api/ucenter/gitee/callback # 应用回调地址（用户授权后，重定向的地址）

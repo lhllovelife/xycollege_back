@@ -152,4 +152,17 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
         return jwtToken;
     }
+
+    /**
+     * 根据openid获取会员对象
+     * @param openid
+     * @return
+     */
+    @Override
+    public Member getByOpenId(String openid) {
+
+        QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("openid", openid);
+        return baseMapper.selectOne(queryWrapper);
+    }
 }
