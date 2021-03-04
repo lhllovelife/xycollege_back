@@ -1,5 +1,6 @@
 package cn.andylhl.xy.service.ucenter.mapper;
 
+import cn.andylhl.xy.service.base.dto.MemberDTO;
 import cn.andylhl.xy.service.ucenter.entity.Member;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MemberMapper extends BaseMapper<Member> {
 
+    /**
+     * 根据id获取订单中需要的会员信息
+     * @param memberId
+     * @return
+     */
+    MemberDTO selectMemberDTOByMemberId(String memberId);
 }

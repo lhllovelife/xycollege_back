@@ -3,6 +3,26 @@
 <mapper namespace="cn.andylhl.xy.service.edu.mapper.CourseMapper">
 
     <!--
+    根据id获取订单中需要的课程信息和讲师信息
+    CourseDTO selectCourseDTOByCourseId(String courseId);
+    -->
+    <select id="selectCourseDTOByCourseId" parameterType="String" resultType="cn.andylhl.xy.service.base.dto.CourseDTO">
+        select
+            c.id as id,
+            c.title as title,
+            c.price as price,
+            c.cover as cover,
+            t.name as teacherName
+        from
+        	edu_course c
+        join
+        	edu_teacher t
+        on
+        	c.teacher_id = t.id
+        where c.id = #{courseId}
+    </select>
+
+    <!--
     查询课程信息和讲师信息
     WebCourseVO selectWebCourseVOById(String id);
     -->

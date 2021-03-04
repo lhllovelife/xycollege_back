@@ -1,5 +1,6 @@
 package cn.andylhl.xy.service.edu.service;
 
+import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import cn.andylhl.xy.service.edu.entity.vo.*;
@@ -98,4 +99,11 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     List<Course> getHotCourseList();
+
+    /**
+     * 根据id获取订单中需要的课程信息和讲师信息
+     * @param courseId
+     * @return
+     */
+    CourseDTO getCourseDTO(String courseId);
 }

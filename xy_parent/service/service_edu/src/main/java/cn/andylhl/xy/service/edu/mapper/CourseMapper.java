@@ -1,5 +1,6 @@
 package cn.andylhl.xy.service.edu.mapper;
 
+import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.vo.CoursePublishVO;
 import cn.andylhl.xy.service.edu.entity.vo.CourseQueryVO;
@@ -51,4 +52,11 @@ public interface CourseMapper extends BaseMapper<Course> {
      * @return
      */
     WebCourseVO selectWebCourseVOById(String id);
+
+    /**
+     * 根据id获取订单中需要的课程信息和讲师信息
+     * @param courseId
+     * @return
+     */
+    CourseDTO selectCourseDTOByCourseId(String courseId);
 }

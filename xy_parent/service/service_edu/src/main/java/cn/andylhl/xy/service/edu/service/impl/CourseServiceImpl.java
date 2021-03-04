@@ -1,6 +1,7 @@
 package cn.andylhl.xy.service.edu.service.impl;
 
 import cn.andylhl.xy.common.base.result.R;
+import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.edu.entity.*;
 import cn.andylhl.xy.service.edu.entity.form.CourseInfoForm;
 import cn.andylhl.xy.service.edu.entity.vo.*;
@@ -357,5 +358,18 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         queryWrapper.last("limit 0, 8");
 
         return baseMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 根据id获取订单中需要的课程信息和讲师信息
+     * @param courseId
+     * @return
+     */
+    @Override
+    public CourseDTO getCourseDTO(String courseId) {
+
+        CourseDTO courseDTO = baseMapper.selectCourseDTOByCourseId(courseId);
+
+        return courseDTO;
     }
 }

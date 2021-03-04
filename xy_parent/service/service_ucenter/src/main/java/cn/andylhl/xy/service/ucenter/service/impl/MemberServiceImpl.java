@@ -5,6 +5,7 @@ import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.common.base.util.FormUtils;
 import cn.andylhl.xy.common.base.util.JwtInfo;
 import cn.andylhl.xy.common.base.util.JwtUtils;
+import cn.andylhl.xy.service.base.dto.MemberDTO;
 import cn.andylhl.xy.service.ucenter.entity.Member;
 import cn.andylhl.xy.service.ucenter.entity.vo.LoginVO;
 import cn.andylhl.xy.service.ucenter.entity.vo.RegisterVO;
@@ -164,5 +165,18 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("openid", openid);
         return baseMapper.selectOne(queryWrapper);
+    }
+
+    /**
+     * 根据id获取订单中需要的会员信息
+     * @param memberId
+     * @return
+     */
+    @Override
+    public MemberDTO getMemberDTO(String memberId) {
+
+        MemberDTO memberDTO = baseMapper.selectMemberDTOByMemberId(memberId);
+
+        return memberDTO;
     }
 }

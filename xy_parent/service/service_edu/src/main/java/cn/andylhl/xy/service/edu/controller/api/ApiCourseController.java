@@ -1,6 +1,7 @@
 package cn.andylhl.xy.service.edu.controller.api;
 
 import cn.andylhl.xy.common.base.result.R;
+import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.edu.entity.Course;
 import cn.andylhl.xy.service.edu.entity.vo.ChapterVO;
 import cn.andylhl.xy.service.edu.entity.vo.SubjectVO;
@@ -89,5 +90,20 @@ public class ApiCourseController {
         return R.ok().data("webCourseVO", webCourseVO).data("chapterVOList", chapterVOList);
     }
 
+    /**
+     * inner 供微服务进行调用
+     */
+    @ApiOperation("根据id获取订单中需要的课程信息和讲师信息")
+    @GetMapping("/inner/get-course-dto/{courseId}")
+    public CourseDTO getCourseDTO(
+            @ApiParam(value = "课程id", required = true)
+            @PathVariable("courseId") String courseId) {
+        log.info("进入service_edu, 根据id获取订单中需要的课程信息和讲师信息");
+
+        CourseDTO courseDTO = courseService.getCourseDTO(courseId);
+
+        return courseDTO;
+
+    }
 
 }

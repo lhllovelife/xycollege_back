@@ -6,6 +6,8 @@ import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.common.base.util.JwtInfo;
 import cn.andylhl.xy.common.base.util.JwtUtils;
+import cn.andylhl.xy.service.base.dto.CourseDTO;
+import cn.andylhl.xy.service.base.dto.MemberDTO;
 import cn.andylhl.xy.service.ucenter.entity.vo.LoginVO;
 import cn.andylhl.xy.service.ucenter.entity.vo.RegisterVO;
 import cn.andylhl.xy.service.ucenter.service.MemberService;
@@ -71,7 +73,21 @@ public class ApiMemberController {
             // 抛出获取信息失败异常
             throw new XyCollegeException(ResultCodeEnum.FETCH_USERINFO_ERROR);
         }
+    }
 
+    /**
+     * inner 供微服务进行调用
+     */
+    @ApiOperation("根据id获取订单中需要的会员信息")
+    @GetMapping("/inner/get-member-dto/{memberId}")
+    public MemberDTO getMemberDTO(
+            @ApiParam(value = "会员id", required = true)
+            @PathVariable("memberId") String memberId) {
+        log.info("进入service_edu, 根据id获取订单中需要的会员信息");
+
+        MemberDTO memberDTO = memberService.getMemberDTO(memberId);
+
+        return memberDTO;
 
     }
 

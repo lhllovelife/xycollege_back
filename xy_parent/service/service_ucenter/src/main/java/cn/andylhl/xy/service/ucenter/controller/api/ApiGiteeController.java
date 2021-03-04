@@ -35,6 +35,7 @@ import java.util.Map;
  */
 
 @CrossOrigin
+@Api(tags = "第三方登录（Gitee）")
 @Slf4j
 @Controller
 @RequestMapping("/api/ucenter/gitee")
