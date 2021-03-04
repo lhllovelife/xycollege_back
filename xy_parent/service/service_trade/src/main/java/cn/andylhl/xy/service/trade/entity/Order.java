@@ -27,6 +27,14 @@ public class Order extends BaseEntity {
 
     private static final long serialVersionUID=1L;
 
+    // 订单状态（0：未支付 1：已支付）
+    public static Integer ORDER_STATUS_NON_PAYMENT = 0; // 未支付
+    public static Integer ORDER_STATUS_PAYMENT_RECEIVED = 1; // 已支付
+
+    // 支付类型（1：微信 2：支付宝）
+    public static Integer PAY_TYPE_WECHAR = 1;
+    public static Integer PAY_TYPE_ALIPAY = 2;
+
     @ApiModelProperty(value = "订单号")
     private String orderNo;
 
