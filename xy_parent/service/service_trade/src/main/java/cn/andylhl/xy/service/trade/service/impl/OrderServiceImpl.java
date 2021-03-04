@@ -107,4 +107,21 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
         return order.getId();
     }
+
+    /**
+     * 获取订单信息
+     * @param orderId
+     * @param memberId
+     * @return
+     */
+    @Override
+    public Order getOrdrtInfo(String orderId, String memberId) {
+
+        QueryWrapper<Order> queryWrapper = new QueryWrapper();
+        queryWrapper
+                .eq("id", orderId)
+                .eq("member_id",memberId);
+
+        return baseMapper.selectOne(queryWrapper);
+    }
 }

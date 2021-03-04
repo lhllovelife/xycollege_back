@@ -20,4 +20,12 @@ public interface OrderService extends IService<Order> {
      * @return
      */
     String saveOrder(String courseId, String memberId);
+
+    /**
+     * 获取订单信息
+     * @param orderId
+     * @param memberId
+     * @return
+     */
+    Order getOrdrtInfo(String orderId, String memberId);
 }
