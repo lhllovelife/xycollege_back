@@ -3,6 +3,8 @@ package cn.andylhl.xy.service.trade.service;
 import cn.andylhl.xy.service.trade.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 订单 服务类
@@ -28,4 +30,26 @@ public interface OrderService extends IService<Order> {
      * @return
      */
     Order getOrdrtInfo(String orderId, String memberId);
+
+    /**
+     * 判断当前课程是否被购买
+     * @param courseId
+     * @param memberId
+     * @return
+     */
+    Boolean isBuyByCourseId(String courseId, String memberId);
+
+    /**
+     * 根据会员id查询自己的订单列表
+     * @param memberId
+     * @return
+     */
+    List<Order> getOrderList(String memberId);
+
+    /**
+     * 根据订单id删除订单
+     * @param orderId
+     * @return
+     */
+    Boolean removeOrder(String orderId, String memberId);
 }

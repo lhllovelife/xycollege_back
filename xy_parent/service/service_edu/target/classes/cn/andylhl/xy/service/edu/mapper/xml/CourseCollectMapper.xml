@@ -2,4 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.andylhl.xy.service.edu.mapper.CourseCollectMapper">
 
+    <!--
+     获取当前用户课程收藏列表
+     List<CourseCollectVO> selectCourseCollectVOList(String memberId);
+    -->
+    <select id="selectCourseCollectVOList" parameterType="String" resultType="cn.andylhl.xy.service.edu.entity.vo.CourseCollectVO">
+        select
+            cc.id as id,
+            cc.member_id as memberId,
+            cc.course_id as courseId,
+            c.title as title,
+            c.price as price,
+            c.lesson_num as lessonNum,
+            c.cover as cover,
+            t.name as teacherName,
+            cc.gmt_create as gmtCreate
+        from
+            edu_course_collect cc
+        join
+            edu_course c
+        on
+            cc.course_id = c.id
+        join
+            edu_teacher t
+        on
+            c.teacher_id = t.id
+        where
+            member_id = #{memberId}
+
+    </select>
+
 </mapper>

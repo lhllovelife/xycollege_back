@@ -13,10 +13,12 @@ import cn.andylhl.xy.service.trade.util.OrderNoUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.bytebuddy.asm.Advice;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -123,5 +125,86 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .eq("member_id",memberId);
 
         return baseMapper.selectOne(queryWrapper);
+    }
+
+    /**
+     * 判断当前课程是否被购买
+     * @param courseId
+     * @param memberId
+     * @return
+     */
+    @Override
+    public Boolean isBuyByCourseId(String courseId, String memberId) {
+
+        // 方法一 ：
+
+        /*
+        // step1 查看用户是否有该课程的订单
+        // 无订单，直接返回false
+        // 有订单，进一步判断是否已支付
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("course_id", courseId)
+                .eq("member_id", memberId);
+        Order order = baseMapper.selectOne(queryWrapper);
+        if (order == null) {
+            // 该用户没有该课程的订单，所以未购买
+            return false;
+        }
+
+        // step2 判断订单支付状态
+        Integer status = order.getStatus();
+
+        if (status == Order.ORDER_STATUS_NON_PAYMENT) {
+            // 未支付
+            return false;
+        }
+
+        // 执行到该处说明已支付
+        return true;
+         */
+
+        // 方法二：sql查询用户是否有该课程已支付的订单
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("course_id", courseId)
+                .eq("member_id", memberId)
+                .eq("status", Order.ORDER_STATUS_PAYMENT_RECEIVED);
+        Order order = baseMapper.selectOne(queryWrapper);
+
+        return order == null ? false : true;
+    }
+
+    /**
+     * 根据会员id查询自己的订单列表
+     * @param memberId
+     * @return
+     */
+    @Override
+    public List<Order> getOrderList(String memberId) {
+
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("member_id", memberId);
+
+        List<Order> orderList = baseMapper.selectList(queryWrapper);
+
+        return orderList;
+    }
+
+    /**
+     * 根据订单id删除订单
+     * @param orderId
+     * @param memberId
+     * @return
+     */
+    @Override
+    public Boolean removeOrder(String orderId, String memberId) {
+
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("id", orderId)
+                .eq("member_id", memberId);
+
+        return this.remove(queryWrapper);
     }
 }
