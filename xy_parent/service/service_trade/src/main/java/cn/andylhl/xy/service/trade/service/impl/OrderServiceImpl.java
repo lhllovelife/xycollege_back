@@ -5,20 +5,27 @@ import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.base.dto.MemberDTO;
 import cn.andylhl.xy.service.trade.entity.Order;
+import cn.andylhl.xy.service.trade.entity.PayLog;
 import cn.andylhl.xy.service.trade.feign.EduCourseRemoteService;
 import cn.andylhl.xy.service.trade.feign.UcenterMemberRemoteService;
 import cn.andylhl.xy.service.trade.mapper.OrderMapper;
+import cn.andylhl.xy.service.trade.mapper.PayLogMapper;
 import cn.andylhl.xy.service.trade.service.OrderService;
 import cn.andylhl.xy.service.trade.util.OrderNoUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
 import net.bytebuddy.asm.Advice;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -36,6 +43,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     private UcenterMemberRemoteService ucenterMemberRemoteService;
+
+    @Autowired
+    private PayLogMapper payLogMapper;
 
     /**
      * 新增订单
@@ -206,5 +216,49 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .eq("member_id", memberId);
 
         return this.remove(queryWrapper);
+    }
+
+    /**
+     * 根据订单号获取订单信息
+     * @param orderNo
+     * @return
+     */
+    @Override
+    public Order getOrderByOrderNo(String orderNo) {
+
+        QueryWrapper<Order>  queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_no", orderNo);
+
+        return baseMapper.selectOne(queryWrapper);
+    }
+
+    /**
+     * 更改购买订单状态, 记录支付日志
+     * @param params
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateOrderStatus(Map<String, String> params) {
+
+        // 更改订单状态
+        String orderNo = params.get("out_trade_no");
+        Order order = this.getOrderByOrderNo(orderNo);
+        order.setStatus(Order.ORDER_STATUS_PAYMENT_RECEIVED); // 修改状态未支付成功
+        baseMapper.updateById(order);
+
+        // 记录支付日志
+        PayLog payLog = new PayLog();
+        payLog.setOrderNo(orderNo); // 订单号
+        payLog.setPayTime(new Date()); // 支付完成时间
+        payLog.setTotalFee(new BigDecimal(Double.parseDouble(params.get("total_amount").trim())*100).longValue()); // 支付金额（分）
+        payLog.setTransactionId(params.get("trade_no")); // 交易流水号
+        payLog.setTradeState(params.get("trade_status")); // 交易状态
+        payLog.setPayType(Order.PAY_TYPE_ALIPAY); // 支付类型（1：微信 2：支付宝）
+        payLog.setAttr(new Gson().toJson(params));
+        payLogMapper.insert(payLog);
+
+        // TODO 更新课程销量
+        eduCourseRemoteService.updateCourseBuyCount(order.getCourseId());
+
     }
 }

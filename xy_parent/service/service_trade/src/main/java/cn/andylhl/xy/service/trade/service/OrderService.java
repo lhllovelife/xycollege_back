@@ -4,6 +4,7 @@ import cn.andylhl.xy.service.trade.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -52,4 +53,17 @@ public interface OrderService extends IService<Order> {
      * @return
      */
     Boolean removeOrder(String orderId, String memberId);
+
+    /**
+     * 根据订单号获取订单信息
+     * @param orderNo
+     * @return
+     */
+    Order getOrderByOrderNo(String orderNo);
+
+    /**
+     * 更改购买订单状态, 记录支付日志
+     * @param params
+     */
+    void updateOrderStatus(Map<String, String> params);
 }

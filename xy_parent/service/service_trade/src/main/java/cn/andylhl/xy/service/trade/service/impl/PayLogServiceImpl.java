@@ -5,6 +5,10 @@ import cn.andylhl.xy.service.trade.mapper.PayLogMapper;
 import cn.andylhl.xy.service.trade.service.PayLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -17,4 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> implements PayLogService {
 
+
 }
+

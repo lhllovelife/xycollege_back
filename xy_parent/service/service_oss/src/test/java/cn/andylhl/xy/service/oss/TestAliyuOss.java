@@ -4,6 +4,8 @@ import cn.andylhl.xy.service.oss.service.FileService;
 import cn.andylhl.xy.service.oss.util.OssProperties;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.google.gson.Gson;
+import io.swagger.models.auth.In;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,6 +56,7 @@ public class TestAliyuOss {
     public void testPassword() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode("123");
+
         System.out.println(encode);
     }
 

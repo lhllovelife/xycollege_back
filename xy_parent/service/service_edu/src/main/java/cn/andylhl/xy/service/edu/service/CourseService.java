@@ -106,4 +106,11 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     CourseDTO getCourseDTO(String courseId);
+
+    /**
+     * 更新课程销量
+     * @param courseId
+     * @return
+     */
+    boolean updateCourseBuyCount(String courseId);
 }

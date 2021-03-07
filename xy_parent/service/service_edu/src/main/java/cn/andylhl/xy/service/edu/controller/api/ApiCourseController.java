@@ -106,4 +106,24 @@ public class ApiCourseController {
 
     }
 
+    /**
+     * inner 供微服务进行调用
+     */
+    @ApiOperation("更新课程销量")
+    @GetMapping("/inner/update-buy-count/{courseId}")
+    public R updateCourseBuyCount(
+            @ApiParam(value = "课程id", required = true)  @PathVariable("courseId") String courseId) {
+
+        log.info("进入service_edu, 更新课程销量");
+
+        boolean result = courseService.updateCourseBuyCount(courseId);
+
+        if (result) {
+            return R.ok().message("销量更新成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
+
+    }
+
 }

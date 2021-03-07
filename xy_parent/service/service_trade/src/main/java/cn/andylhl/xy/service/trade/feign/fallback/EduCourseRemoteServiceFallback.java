@@ -1,5 +1,6 @@
 package cn.andylhl.xy.service.trade.feign.fallback;
 
+import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.trade.feign.EduCourseRemoteService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,5 +20,11 @@ public class EduCourseRemoteServiceFallback implements EduCourseRemoteService {
     public CourseDTO getCourseDTO(String courseId) {
         log.info("service-edu course 降级处理");
         return null;
+    }
+
+    @Override
+    public R updateCourseBuyCount(String courseId) {
+        log.info("service-edu course 降级处理");
+        return R.error();
     }
 }

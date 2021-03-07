@@ -372,4 +372,18 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         return courseDTO;
     }
+
+    /**
+     * 更新课程销量
+     * @param courseId
+     * @return
+     */
+    @Override
+    public boolean updateCourseBuyCount(String courseId) {
+
+        Course course = baseMapper.selectById(courseId);
+        course.setBuyCount(course.getBuyCount() + 1);
+
+        return this.updateById(course);
+    }
 }

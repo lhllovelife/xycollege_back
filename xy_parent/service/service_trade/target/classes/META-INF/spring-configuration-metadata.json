@@ -1,0 +1,57 @@
+{
+  "groups": [
+    {
+      "name": "alipay",
+      "type": "cn.andylhl.xy.service.trade.util.AlipayProperties",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "alipay.alipay-public-key",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.app-id",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.charset",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.format",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.notify-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.private-key",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.return-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.server-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    },
+    {
+      "name": "alipay.sign-type",
+      "type": "java.lang.String",
+      "sourceType": "cn.andylhl.xy.service.trade.util.AlipayProperties"
+    }
+  ],
+  "hints": []
+}
