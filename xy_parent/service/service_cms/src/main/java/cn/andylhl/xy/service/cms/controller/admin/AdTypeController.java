@@ -22,7 +22,7 @@ import java.util.List;
  * @author lhl
  * @since 2021-02-24
  */
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "推荐位管理")
 @Slf4j
 @RestController

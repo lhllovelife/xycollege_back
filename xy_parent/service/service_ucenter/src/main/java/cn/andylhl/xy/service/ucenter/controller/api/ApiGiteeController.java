@@ -6,24 +6,17 @@ import cn.andylhl.xy.common.base.util.HttpClientUtils;
 import cn.andylhl.xy.common.base.util.JwtInfo;
 import cn.andylhl.xy.common.base.util.JwtUtils;
 import cn.andylhl.xy.service.ucenter.entity.Member;
-import cn.andylhl.xy.service.ucenter.mapper.MemberMapper;
 import cn.andylhl.xy.service.ucenter.service.MemberService;
 import cn.andylhl.xy.service.ucenter.util.GiteeProperties;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +27,7 @@ import java.util.Map;
  * @date: 2021/3/2 21:27
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "第三方登录（Gitee）")
 @Slf4j
 @Controller

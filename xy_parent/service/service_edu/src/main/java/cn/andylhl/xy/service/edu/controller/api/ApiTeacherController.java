@@ -20,7 +20,7 @@ import java.util.Map;
  * @date: 2021/2/19 18:41
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "讲师")
 @Slf4j
 @RestController

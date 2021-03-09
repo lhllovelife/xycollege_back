@@ -19,7 +19,7 @@ import java.util.List;
  * @date: 2021/2/25 15:17
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "广告推荐")
 @Slf4j
 @RestController

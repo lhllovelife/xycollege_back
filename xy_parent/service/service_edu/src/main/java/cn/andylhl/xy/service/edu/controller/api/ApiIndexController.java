@@ -23,7 +23,7 @@ import java.util.List;
  * @date: 2021/2/25 21:28
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "首页")
 @Slf4j
 @RestController

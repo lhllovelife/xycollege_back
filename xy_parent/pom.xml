@@ -5,7 +5,8 @@
 	<modules>
 		<module>common</module>
 		<module>service</module>
-	</modules>
+        <module>infrastructure</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

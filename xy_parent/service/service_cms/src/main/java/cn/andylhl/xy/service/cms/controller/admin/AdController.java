@@ -23,7 +23,7 @@ import java.util.List;
  * @author lhl
  * @since 2021-02-24
  */
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "广告推荐管理")
 @Slf4j
 @RestController

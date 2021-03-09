@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @author lhl
  * @since 2021-01-29
  */
-@CrossOrigin
+// @CrossOrigin
 @Api(tags = "课时管理")
 @Slf4j
 @RestController

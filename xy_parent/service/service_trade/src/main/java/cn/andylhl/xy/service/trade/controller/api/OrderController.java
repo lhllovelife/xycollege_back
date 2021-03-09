@@ -24,7 +24,7 @@ import java.util.List;
  * @author lhl
  * @since 2021-03-04
  */
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "网站订单")
 @Slf4j
 @RestController

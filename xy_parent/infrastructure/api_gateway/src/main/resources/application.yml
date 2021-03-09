@@ -1,0 +1,45 @@
+server:
+  port: 9110 # 端口号
+spring:
+  application:
+    name: infrastructure-apigateway # 应用名称
+  profiles:
+    active: dev # 环境配置
+#spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.43.193:8848 # 注册中心nacos服务地址
+    gateway:
+      discovery:
+        locator:
+          enabled: true # gateway可以发现nacos中的微服务
+      routes:
+      - id: service-edu       # edu微服务
+        uri: lb://service-edu
+        predicates:
+        - Path=/user/**,/*/edu/**
+      - id: service-oss       # oss微服务
+        uri: lb://service-oss
+        predicates:
+        - Path=/*/oss/**
+      - id: service-vod       # vod微服务
+        uri: lb://service-vod
+        predicates:
+        - Path=/*/vod/**
+      - id: service-cms       # cms微服务
+        uri: lb://service-cms
+        predicates:
+        - Path=/*/cms/**
+      - id: service-sms       # sms微服务
+        uri: lb://service-sms
+        predicates:
+        - Path=/*/sms/**
+      - id: service-ucenter   # 用户中心微服务
+        uri: lb://service-ucenter
+        predicates:
+        - Path=/*/ucenter/**
+      - id: service-trade     # 交易中心微服务
+        uri: lb://service-trade
+        predicates:
+        - Path=/*/trade/**

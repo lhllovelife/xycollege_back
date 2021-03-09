@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2021-01-29
  */
 
-@CrossOrigin
+// @CrossOrigin
 @Api(tags = "课程分类管理")
 @Slf4j
 @RestController

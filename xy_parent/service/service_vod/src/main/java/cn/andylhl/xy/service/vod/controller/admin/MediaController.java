@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @Slf4j
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @Api(tags = "阿里云视频点播")
 @RequestMapping("/admin/vod/media")

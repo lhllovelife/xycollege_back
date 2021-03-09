@@ -30,7 +30,7 @@ import java.util.Map;
  * @date: 2021/3/7 12:41
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "支付宝网站支付")
 @Slf4j
 @Controller

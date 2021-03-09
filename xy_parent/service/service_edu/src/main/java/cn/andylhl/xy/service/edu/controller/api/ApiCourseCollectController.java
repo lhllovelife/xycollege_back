@@ -26,7 +26,7 @@ import java.util.List;
  * @author lhl
  * @since 2021-01-29
  */
-@CrossOrigin // 解决跨域问题
+//@CrossOrigin // 解决跨域问题
 @Api(tags = "课程收藏")
 @Slf4j
 @RestController

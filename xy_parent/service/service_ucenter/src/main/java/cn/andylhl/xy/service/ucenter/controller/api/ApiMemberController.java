@@ -6,7 +6,6 @@ import cn.andylhl.xy.common.base.result.R;
 import cn.andylhl.xy.common.base.result.ResultCodeEnum;
 import cn.andylhl.xy.common.base.util.JwtInfo;
 import cn.andylhl.xy.common.base.util.JwtUtils;
-import cn.andylhl.xy.service.base.dto.CourseDTO;
 import cn.andylhl.xy.service.base.dto.MemberDTO;
 import cn.andylhl.xy.service.ucenter.entity.vo.LoginVO;
 import cn.andylhl.xy.service.ucenter.entity.vo.RegisterVO;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2021-03-02
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "会员")
 @Slf4j
 @RestController

@@ -26,7 +26,7 @@ import java.util.Map;
  * @author lhl
  * @since 2021-01-29
  */
-@CrossOrigin
+// @CrossOrigin
 @Api(tags = "讲师管理")
 @Slf4j
 @RestController

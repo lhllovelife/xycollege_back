@@ -25,7 +25,7 @@ import java.time.LocalTime;
 
 
 @Slf4j
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @Api(tags = "阿里云文件管理")
 @RequestMapping("/admin/oss/file")

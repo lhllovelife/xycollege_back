@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Slf4j
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @Api(tags = "短信管理")
 @RequestMapping("/api/sms")

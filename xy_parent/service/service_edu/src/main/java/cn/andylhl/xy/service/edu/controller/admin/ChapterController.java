@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2021-01-29
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "章节管理")
 @Slf4j
 @RestController

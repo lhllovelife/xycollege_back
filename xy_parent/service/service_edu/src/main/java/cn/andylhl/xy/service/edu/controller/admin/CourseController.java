@@ -29,7 +29,7 @@ import java.util.List;
  * @since 2021-01-29
  */
 @Api(tags = "课程管理")
-@CrossOrigin // 跨域
+// @CrossOrigin // 跨域
 @Slf4j
 @RestController
 @RequestMapping("/admin/edu/course")

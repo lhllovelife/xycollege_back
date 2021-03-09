@@ -26,7 +26,7 @@ import java.util.List;
  * @date: 2021/2/21 17:23
  */
 
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "课程")
 @Slf4j
 @RestController

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @date: 2021/2/3 20:06
  */
 
-@CrossOrigin
+// @CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping("/user")
