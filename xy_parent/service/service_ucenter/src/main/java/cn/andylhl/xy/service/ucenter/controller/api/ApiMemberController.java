@@ -43,7 +43,7 @@ public class ApiMemberController {
     public R register(
             @ApiParam(value = "注册对象", required = true)
             @RequestBody RegisterVO registerVO){
-        log.info("进入service_edu, 会员注册");
+        log.info("进入service_ucenter, 会员注册");
 
         memberService.register(registerVO);
         return R.ok().message("注册成功");
@@ -53,7 +53,7 @@ public class ApiMemberController {
     @PostMapping("/login")
     public R login(@ApiParam(value = "登录对象", required = true)
                    @RequestBody LoginVO loginVO) {
-        log.info("进入service_edu, 会员登录");
+        log.info("进入service_ucenter, 会员登录");
 
         String token = memberService.login(loginVO);
 
@@ -63,7 +63,7 @@ public class ApiMemberController {
     @ApiOperation(value = "根据token获取登录信息")
     @GetMapping("/get-login-info")
     public R getLogioIngo(HttpServletRequest request) {
-        log.info("进入service_edu, 根据token获取登录信息");
+        log.info("进入service_ucenter, 根据token获取登录信息");
 
         try {
             JwtInfo jwtInfo = JwtUtils.getMemberIdByJwtToken(request);
@@ -82,7 +82,7 @@ public class ApiMemberController {
     public MemberDTO getMemberDTO(
             @ApiParam(value = "会员id", required = true)
             @PathVariable("memberId") String memberId) {
-        log.info("进入service_edu, 根据id获取订单中需要的会员信息");
+        log.info("进入service_ucenter, 根据id获取订单中需要的会员信息");
 
         MemberDTO memberDTO = memberService.getMemberDTO(memberId);
 

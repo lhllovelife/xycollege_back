@@ -43,3 +43,7 @@ spring:
         uri: lb://service-trade
         predicates:
         - Path=/*/trade/**
+      - id: service-statistics     # 数据统计中心微服务
+        uri: lb://service-statistics
+        predicates:
+        - Path=/*/statistics/**

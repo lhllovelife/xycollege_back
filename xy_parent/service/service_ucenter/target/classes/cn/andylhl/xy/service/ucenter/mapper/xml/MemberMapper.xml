@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.andylhl.xy.service.ucenter.mapper.MemberMapper">
 
+
+    <!--
+     根据日期统计注册人数
+        Integer selectRegisterNumByDay(String day);
+    -->
+    <select id="selectRegisterNumByDay" parameterType="String" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            ucenter_member
+        where
+            DATE(gmt_create) = #{day}
+    </select>
+
+
     <!--
     根据id获取订单中需要的会员信息
     MemberDTO selectMemberDTOByMemberId(String memberId);

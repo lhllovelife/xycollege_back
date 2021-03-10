@@ -20,4 +20,11 @@ public interface MemberMapper extends BaseMapper<Member> {
      * @return
      */
     MemberDTO selectMemberDTOByMemberId(String memberId);
+
+    /**
+     * 根据日期统计注册人数
+     * @param day
+     * @return
+     */
+    Integer selectRegisterNumByDay(String day);
 }

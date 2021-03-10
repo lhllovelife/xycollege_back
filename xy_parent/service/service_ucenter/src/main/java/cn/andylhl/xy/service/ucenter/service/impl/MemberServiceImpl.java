@@ -179,4 +179,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
         return memberDTO;
     }
+
+    /**
+     * 根据日期统计注册人数
+     * @param day
+     * @return
+     */
+    @Override
+    public Integer countRegisterNum(String day) {
+
+        return baseMapper.selectRegisterNumByDay(day);
+    }
 }

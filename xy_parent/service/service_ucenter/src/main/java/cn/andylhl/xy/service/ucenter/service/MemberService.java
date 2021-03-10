@@ -42,4 +42,11 @@ public interface MemberService extends IService<Member> {
      * @return
      */
     MemberDTO getMemberDTO(String memberId);
+
+    /**
+     * 根据日期统计注册人数
+     * @param day
+     * @return
+     */
+    Integer countRegisterNum(String day);
 }
