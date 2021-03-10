@@ -13,6 +13,7 @@ import cn.andylhl.xy.service.trade.mapper.PayLogMapper;
 import cn.andylhl.xy.service.trade.service.OrderService;
 import cn.andylhl.xy.service.trade.util.OrderNoUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import net.bytebuddy.asm.Advice;
@@ -257,8 +258,27 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         payLog.setAttr(new Gson().toJson(params));
         payLogMapper.insert(payLog);
 
-        // TODO 更新课程销量
+        // 更新课程销量
         eduCourseRemoteService.updateCourseBuyCount(order.getCourseId());
 
+    }
+
+    /**
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @Override
+    public Page<Order> selectPage(Long page, Long limit) {
+
+        // 封装分页信息对象
+        Page<Order> pageParam = new Page<>(page, limit);
+        // 查询条件（按照订单创建时间倒序）
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("gmt_create");
+
+        // 执行分页查询
+        return baseMapper.selectPage(pageParam, queryWrapper);
     }
 }

@@ -4,6 +4,7 @@ import cn.andylhl.xy.service.base.dto.MemberDTO;
 import cn.andylhl.xy.service.ucenter.entity.Member;
 import cn.andylhl.xy.service.ucenter.entity.vo.LoginVO;
 import cn.andylhl.xy.service.ucenter.entity.vo.RegisterVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -49,4 +50,12 @@ public interface MemberService extends IService<Member> {
      * @return
      */
     Integer countRegisterNum(String day);
+
+    /**
+     * 分页展示用户信息
+     * @param page
+     * @param limit
+     * @return
+     */
+    Page<Member> selectPage(Long page, Long limit);
 }

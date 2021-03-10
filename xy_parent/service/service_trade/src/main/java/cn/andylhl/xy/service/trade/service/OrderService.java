@@ -1,6 +1,7 @@
 package cn.andylhl.xy.service.trade.service;
 
 import cn.andylhl.xy.service.trade.entity.Order;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -66,4 +67,12 @@ public interface OrderService extends IService<Order> {
      * @param params
      */
     void updateOrderStatus(Map<String, String> params);
+
+    /**
+     * 分页查询订单信息
+     * @param page
+     * @param limit
+     * @return
+     */
+    Page<Order> selectPage(Long page, Long limit);
 }

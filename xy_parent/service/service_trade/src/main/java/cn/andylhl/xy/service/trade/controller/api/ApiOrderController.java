@@ -29,7 +29,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/trade/order")
-public class OrderController {
+public class ApiOrderController {
 
     @Autowired
     private OrderService orderService;

@@ -12,6 +12,7 @@ import cn.andylhl.xy.service.ucenter.entity.vo.RegisterVO;
 import cn.andylhl.xy.service.ucenter.mapper.MemberMapper;
 import cn.andylhl.xy.service.ucenter.service.MemberService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.FormatUtils;
@@ -189,5 +190,23 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     public Integer countRegisterNum(String day) {
 
         return baseMapper.selectRegisterNumByDay(day);
+    }
+
+    /**
+     * 分页展示用户信息
+     * @param page
+     * @param limit
+     * @return
+     */
+    @Override
+    public Page<Member> selectPage(Long page, Long limit) {
+
+        // 封装分页对象
+        Page<Member> pageParam = new Page<>(page, limit);
+        // 准备查询参数（按照用户注册时间倒序）
+        QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("gmt_create");
+
+        return baseMapper.selectPage(pageParam, queryWrapper);
     }
 }
