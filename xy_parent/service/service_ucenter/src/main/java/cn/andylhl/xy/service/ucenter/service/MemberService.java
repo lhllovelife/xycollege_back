@@ -58,4 +58,12 @@ public interface MemberService extends IService<Member> {
      * @return
      */
     Page<Member> selectPage(Long page, Long limit);
+
+    /**
+     * 修改用户禁用状态
+     * @param id
+     * @param disabled
+     * @return
+     */
+    boolean updateMemberDisabled(String id, Boolean disabled);
 }

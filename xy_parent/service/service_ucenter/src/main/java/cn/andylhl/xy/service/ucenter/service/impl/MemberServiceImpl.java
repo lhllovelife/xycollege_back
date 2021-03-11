@@ -209,4 +209,20 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
         return baseMapper.selectPage(pageParam, queryWrapper);
     }
+
+    /**
+     * 修改用户禁用状态
+     * @param id
+     * @param disabled
+     * @return
+     */
+    @Override
+    public boolean updateMemberDisabled(String id, Boolean disabled) {
+
+        Member member = new Member();
+        member.setId(id);
+        member.setDisabled(disabled);
+
+        return baseMapper.updateById(member) == 1;
+    }
 }

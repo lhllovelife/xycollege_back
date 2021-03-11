@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,6 +57,24 @@ public class MemberController {
         long total = pageModel.getTotal();
 
         return R.ok().data("rows", memberList).data("total", total);
+
+    }
+
+    @ApiOperation("修改用户禁用状态")
+    @PutMapping("/update/member/{id}/{disabled}")
+    public R updateMemberDisabled(
+            @ApiParam("id") @PathVariable("id") String id,
+            @ApiParam("disabled") @PathVariable("disabled") Boolean disabled){
+
+        log.info("进入service_ucenter, 修改用户禁用状态");
+
+        boolean result = memberService.updateMemberDisabled(id, disabled);
+
+        if (result) {
+            return R.ok().message("修改成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
 
     }
 
